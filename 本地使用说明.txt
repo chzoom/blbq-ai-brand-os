@@ -1,0 +1,78 @@
+饱里宝气 V14.4 本地部署包
+================================
+
+一、最简单：只使用本地专业兜底
+--------------------------------
+直接双击：
+离线本地兜底版.html
+
+不需要联网、不需要 Gemini Key、不需要安装软件。
+标题、正文、标签、评论回复、门店差异化、换一换和本地诊断均可使用。
+AI 联网生成功能在离线打开时不可用。
+
+二、在本地使用 Gemini AI（Mac）
+--------------------------------
+1. 电脑需要安装 Node.js 18 或更高版本。
+2. 在 Google AI Studio 创建 Gemini API Key。
+3. 双击“配置Gemini密钥.command”，粘贴密钥并回车。
+4. 双击“启动工具.command”。
+5. 浏览器会打开：http://127.0.0.1:8787
+6. 在平台左侧点击“测试 AI”，确认 Gemini Online。
+7. 关闭工具：回到启动窗口，按 Control + C。
+
+如果 macOS 阻止打开：
+右键脚本 → 打开 → 再点“打开”。
+也可以在终端进入本文件夹后执行：
+chmod +x *.command
+./配置Gemini密钥.command
+./启动工具.command
+
+三、在本地使用 Gemini AI（Windows）
+------------------------------------
+1. 安装 Node.js 18 或更高版本。
+2. 在 Google AI Studio 创建 Gemini API Key。
+3. 双击“配置Gemini密钥.bat”，粘贴密钥并回车。
+4. 双击“启动工具.bat”。
+5. 在平台左侧点击“测试 AI”，确认 Gemini Online。
+
+四、密钥安全
+------------
+Gemini Key 只保存在当前文件夹的 .env 文件里。
+不要把含有 .env 的文件夹发送给其他人。
+分享部署包前，请删除 .env。
+
+五、原有功能
+------------
+本地部署包完整保留：
+- Gemini AI 生成
+- 专业本地兜底
+- 换一换
+- 标题、正文、标签、评论回复
+- 门店差异化
+- 笔记诊断、爆款拆解
+- 学习中心
+
+六、Netlify 部署
+----------------
+在 Netlify 项目的 Environment variables 中新增：
+GEMINI_API_KEY=你的 Gemini API Key
+可选增加 GEMINI_MODEL=gemini-2.5-flash。
+密钥只配置在 Netlify 环境变量中，不要写入前端文件。
+
+七、接入 BeeAPI / GPT / Codex 兼容模型
+---------------------------------------
+本项目支持 OpenAI 兼容的中转接口。BeeAPI 的 Base URL 和模型名以你的账号控制台为准。
+
+在 .env 中配置：
+AI_PROVIDER=beeapi
+BEEAPI_API_KEY=你的 BeeAPI Key
+BEEAPI_MODEL=你的模型名
+OPENAI_BASE_URL=https://你的兼容地址/v1
+
+如果使用官方 OpenAI 兼容接口，则配置：
+AI_PROVIDER=openai
+OPENAI_API_KEY=你的 Key
+OPENAI_MODEL=你的模型名
+OPENAI_BASE_URL=https://你的兼容地址/v1
+
+服务端最终请求路径为 /chat/completions。Codex 客户端登录凭证不能直接作为网页应用 API Key；请使用 BeeAPI 或官方 API Key，并只放在 .env / Netlify 环境变量中。

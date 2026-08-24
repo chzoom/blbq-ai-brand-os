@@ -1,0 +1,1247 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#bfd82b">
+  <title>饱里宝气｜小红书 AI 运营工作台 V14.4</title>
+  <link rel="icon" type="image/png" href="/assets/logo.png">
+  <link rel="apple-touch-icon" href="/assets/logo.png">
+  
+  <style>
+    :root{
+      --brand:#bfd82b;
+      --brand-dark:#536412;
+      --ink:#283018;
+      --muted:#7b8469;
+      --bg:#f4f5ef;
+      --card:#ffffff;
+      --line:#e3e7d4;
+      --soft:#f4f7df;
+      --danger:#b24d43;
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+    }
+    button,input,textarea,select{font:inherit}
+    button{cursor:pointer}
+    .app{max-width:1320px;margin:0 auto;padding:16px}
+
+    .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:12px 4px 18px;
+      border-bottom:1px solid var(--line);
+      margin-bottom:16px;
+    }
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .brand img{
+      width:52px;height:52px;object-fit:cover;
+      border-radius:14px;border:1px solid var(--line);
+    }
+    .brand h1{
+      margin:0 0 3px;
+      font-size:21px;
+      line-height:1.25;
+      color:#3f4d10;
+      font-weight:900;
+    }
+    .brand p{
+      margin:0;
+      max-width:760px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
+    }
+    .badges{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+    .badge{
+      display:inline-flex;align-items:center;gap:5px;
+      padding:6px 9px;border-radius:999px;
+      border:1px solid #dce4aa;background:var(--soft);
+      color:var(--brand-dark);font-size:10px;font-weight:800;
+    }
+    .dot{width:7px;height:7px;border-radius:50%;background:#8ba80d}
+
+    .shell{display:grid;grid-template-columns:292px minmax(0,1fr);gap:14px}
+    .side,.work{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+    }
+    .side{
+      align-self:start;
+      position:sticky;
+      top:12px;
+      padding:15px;
+    }
+    .work{padding:15px;min-height:720px}
+    .side h2{margin:0;font-size:18px;color:#3f4d10}
+    .side>p{margin:4px 0 12px;color:var(--muted);font-size:11px}
+
+    label{
+      display:block;margin:11px 0 5px;
+      color:#4b581a;font-size:11px;font-weight:800;
+    }
+    input,textarea,select{
+      width:100%;
+      padding:10px 11px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:#fff;
+      color:var(--ink);
+      outline:none;
+      transition:.15s;
+    }
+    textarea{min-height:68px;resize:vertical;line-height:1.55}
+    input:focus,textarea:focus,select:focus{
+      border-color:var(--brand);
+      box-shadow:0 0 0 3px rgba(191,216,43,.14);
+    }
+    .quick{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+    .quick button{
+      border:1px solid var(--line);
+      background:#fafbf6;
+      color:var(--muted);
+      border-radius:999px;
+      padding:5px 8px;
+      font-size:10px;
+    }
+    .quick button:hover{border-color:var(--brand);color:var(--brand-dark)}
+
+    .more-settings{
+      margin-top:13px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:#fafbf7;
+      overflow:hidden;
+    }
+    .more-settings summary{
+      list-style:none;
+      padding:10px 11px;
+      cursor:pointer;
+      color:#4b581a;
+      font-size:11px;
+      font-weight:850;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .more-settings summary::-webkit-details-marker{display:none}
+    .more-settings summary::after{content:"展开";font-size:10px;color:var(--muted);font-weight:600}
+    .more-settings[open] summary::after{content:"收起"}
+    .more-content{padding:0 11px 11px;border-top:1px solid var(--line)}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+    .actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+    .btn{
+      border:0;border-radius:10px;
+      padding:9px 12px;
+      font-weight:850;
+      font-size:12px;
+      transition:.15s;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .primary{background:var(--brand);color:#fff}
+    .soft{background:var(--soft);color:var(--brand-dark);border:1px solid #dce4aa}
+    .ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+    .danger{background:#fff1ee;color:var(--danger);border:1px solid #efc9c2}
+    .help{font-size:10px;line-height:1.5;color:var(--muted);margin-top:6px}
+    .note{
+      margin-top:10px;padding:9px 10px;
+      border-left:3px solid var(--brand);
+      background:#fafbf3;color:var(--muted);
+      font-size:10px;line-height:1.5;
+    }
+    .status{display:flex;align-items:center;gap:6px;margin-top:8px;color:var(--muted);font-size:10px}
+
+    .tabs{
+      display:flex;gap:5px;flex-wrap:wrap;
+      padding-bottom:12px;
+      border-bottom:1px solid var(--line);
+    }
+    .tab,.subtab{
+      border:1px solid transparent;
+      background:transparent;
+      color:var(--muted);
+      border-radius:9px;
+      padding:8px 11px;
+      font-weight:850;
+      font-size:12px;
+    }
+    .tab:hover,.subtab:hover{background:#f7f8f1;color:var(--ink)}
+    .tab.active,.subtab.active{
+      background:var(--soft);
+      border-color:#dce4aa;
+      color:var(--brand-dark);
+    }
+    .subtabs{display:flex;gap:5px;flex-wrap:wrap;margin:12px 0}
+    .pane{display:none}
+    .pane.active{display:block}
+
+    .card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+      margin-bottom:12px;
+    }
+    .cardhead{
+      display:flex;align-items:flex-start;justify-content:space-between;
+      gap:10px;margin-bottom:10px;
+    }
+    .cardhead h3{margin:0 0 3px;font-size:16px;color:#414f12}
+    .cardhead p{margin:0;color:var(--muted);font-size:10px;line-height:1.5}
+    .grid{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:12px}
+    .mini{
+      padding:11px;
+      border:1px solid var(--line);
+      border-radius:11px;
+      background:#fafbf7;
+    }
+    .mini h4{margin:0 0 6px;color:#4b581a;font-size:12px}
+
+    .result{
+      min-height:330px;
+      padding:14px;
+      overflow:auto;
+      white-space:pre-wrap;
+      line-height:1.75;
+      font-size:13px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:11px;
+    }
+    .loading{opacity:.6}
+    .placeholder{color:#a0a78f}
+
+    .upload{
+      min-height:112px;
+      display:flex;align-items:center;justify-content:center;
+      text-align:center;padding:13px;
+      border:1px dashed #cfd99a;
+      border-radius:11px;
+      background:#fafbf5;
+      cursor:pointer;
+    }
+    .upload:hover{border-color:var(--brand)}
+    .preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:6px;margin-top:8px}
+    .preview img{width:100%;height:78px;object-fit:cover;border-radius:9px;border:1px solid var(--line)}
+
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .stat{padding:11px;border:1px solid var(--line);border-radius:11px;background:#fafbf7}
+    .stat strong{display:block;font-size:21px;color:#4b5c10}
+    .learnlist{display:grid;gap:7px}
+    .learn{padding:10px;border:1px solid var(--line);border-radius:11px;background:#fff}
+    .learntop{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:5px}
+    .learntype{
+      padding:4px 7px;border-radius:999px;
+      background:var(--soft);border:1px solid #dce4aa;
+      color:var(--brand-dark);font-size:10px;font-weight:800;
+    }
+    .learnbody{white-space:pre-wrap;font-size:12px;line-height:1.6}
+    .empty{text-align:center;color:var(--muted);padding:28px}
+    .toast{
+      position:fixed;right:16px;bottom:16px;z-index:99;
+      display:none;padding:10px 12px;border-radius:10px;
+      background:#36420f;color:#fff;font-size:12px;
+    }
+
+    @media(max-width:960px){
+      .shell{grid-template-columns:1fr}
+      .side{position:static}
+      .grid{grid-template-columns:1fr}
+    }
+    @media(max-width:640px){
+      .app{padding:9px}
+      .top{align-items:flex-start;padding:8px 2px 13px}
+      .brand img{width:44px;height:44px}
+      .brand h1{font-size:17px}
+      .brand p{font-size:10px}
+      .badges{display:none}
+      .two,.stats{grid-template-columns:1fr}
+      .side,.work{padding:12px}
+      .tab,.subtab{padding:7px 9px;font-size:11px}
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <img src="assets/logo.png" alt="饱里宝气">
+      <div>
+        <h1>饱里宝气 · 小红书运营工作台 V14.4 离线版</h1>
+        <p>AI 创作、专业本地兜底、笔记分析与学习库，功能完整保留，界面重新简化。</p>
+      </div>
+    </div>
+    <div class="badges"><span class="badge"><span class="dot"></span>Gemini 已接入</span><span class="badge">简洁版</span></div>
+  </header>
+  <div class="shell">
+    <aside class="side">
+      <h2>内容设置</h2><p>常用信息填好后，所有模块都会自动读取。</p>
+
+      <label>门店</label>
+      <input id="store" value="林科大店">
+      <div class="quick">
+        <button onclick="setField('store','梅溪湖店')">梅溪湖店</button>
+        <button onclick="setField('store','林科大店')">林科大店</button>
+        <button onclick="setField('store','河西大学城店')">河西大学城店</button>
+      </div>
+
+      <label>菜品</label>
+      <textarea id="dishes">番茄牛肉片、虾仁玉米滑蛋、清炒包菜丝</textarea>
+
+      <label>目标人群</label>
+      <input id="people" value="林科大学生">
+      <div class="quick">
+        <button onclick="setField('people','第一师范学生')">第一师范</button>
+        <button onclick="setField('people','林科大学生')">林科大</button>
+        <button onclick="setField('people','河西大学城（中南大学、湖南师范大学、湖南大学）')">河西大学城</button>
+        <button onclick="setField('people','考研党')">考研党</button>
+        <button onclick="setField('people','上班族')">上班族</button>
+      </div>
+
+      <label>使用场景</label>
+      <input id="scene" value="下课后宿舍午餐">
+      <div class="quick">
+        <button onclick="setField('scene','下课后宿舍午餐')">宿舍午餐</button>
+        <button onclick="setField('scene','图书馆自习后')">自习后</button>
+        <button onclick="setField('scene','晚八下课后')">晚八下课</button>
+        <button onclick="setField('scene','工作日午餐')">工作午餐</button>
+      </div>
+
+      <details class="more-settings">
+        <summary>更多设置（风格、模式、卖点）</summary>
+        <div class="more-content">
+          <div class="two">
+            <div>
+              <label>内容风格</label>
+              <select id="style">
+                <option>真实</option><option selected>学生视角</option><option>幽默</option><option>上班族视角</option>
+              </select>
+            </div>
+            <div>
+              <label>内容强度</label>
+              <select id="depth">
+                <option>标准</option><option selected>增强</option><option>深度</option>
+              </select>
+            </div>
+          </div>
+
+          <label>核心卖点</label>
+          <textarea id="sellingPoints">每周换菜单，中午晚上菜品不同，每天现做不隔夜，中国胃轻食，有肉有菜有主食，不用每天纠结吃什么</textarea>
+
+          <div class="two">
+            <div>
+              <label>生成模式</label>
+              <select id="mode">
+                <option value="gemini">Gemini AI</option>
+                <option value="auto">自动回退</option>
+                <option value="local" selected>本地模板</option>
+              </select>
+            </div>
+            <div>
+              <label>正文类型</label>
+              <select id="postType">
+                <option selected>一周菜单</option><option>单品种草</option><option>门店安利</option><option>场景日常</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="note">API Key 只在 Netlify Function 中读取；学习库保存在当前浏览器。</div>
+        </div>
+      </details>
+
+      <div class="actions">
+        <button class="btn primary" onclick="testAI()">测试 AI</button>
+        <button class="btn soft" onclick="saveDefaults()">保存设置</button>
+      </div>
+      <div id="connection" class="status">尚未测试连接</div>
+    </aside>
+    <main class="work">
+      <nav class="tabs"><button class="tab active" data-main="create" onclick="switchMain('create')">内容创作</button><button class="tab" data-main="analyze" onclick="switchMain('analyze')">笔记分析</button><button class="tab" data-main="learn" onclick="switchMain('learn')">学习中心</button></nav>
+      <section id="main-create" class="pane active"><div class="subtabs"><button class="subtab active" data-create="titles" onclick="switchCreate('titles')">标题</button><button class="subtab" data-create="post" onclick="switchCreate('post')">正文</button><button class="subtab" data-create="tags" onclick="switchCreate('tags')">标签</button><button class="subtab" data-create="replies" onclick="switchCreate('replies')">评论回复</button><button class="subtab" data-create="storeDiff" onclick="switchCreate('storeDiff')">门店差异化</button></div><div id="createBox"></div></section>
+      <section id="main-analyze" class="pane"><div class="subtabs"><button class="subtab active" data-analyze="diagnose" onclick="switchAnalyze('diagnose')">笔记诊断</button><button class="subtab" data-analyze="breakdown" onclick="switchAnalyze('breakdown')">爆款拆解</button></div><div id="analyzeBox"></div></section>
+      <section id="main-learn" class="pane"><div id="learnBox"></div></section>
+    </main>
+  </div>
+</div><div id="toast" class="toast"></div>
+<script>
+const LEARN_KEY='BLBQ_V14_LEARNING',DEFAULT_KEY='BLBQ_V14_DEFAULTS';let createTask='titles',analyzeTask='diagnose',lastResult='',lastType='',images=[];let localVariant={titles:0,post:0,tags:0,replies:0,storeDiff:0,diagnose:0,breakdown:0};
+const META={titles:['AI 标题生成器','按目标人群生成标题20个、爆款标题5个、低风险标题5个和评论引导。','补充要求（可选）','例：突出一周菜单，不要夸张，不要重复。'],post:['AI 正文生成器','按目标人群生成有钩子、有宽度、有真实场景和种草逻辑的完整笔记。','补充要求（可选）','例：像真实学生分享，先写饭点痛点，再写菜单价值。'],tags:['AI 标签生成器','生成品牌、区域、人群、菜品和场景标签。','补充要求（可选）','例：优先林科大、铁道学院，或中南大学、湖师大、湖大区域词。'],replies:['AI 评论回复生成器','粘贴真实评论，生成有针对性的自然回复。','用户评论 / 补充要求','例：多少钱一份？林科大可以送到宿舍吗？'],storeDiff:['AI 门店差异化工具','同一组菜品分别生成三家门店不同内容。','补充要求（可选）','例：三店标题、正文和图片场景都不要重复。']};
+const $=id=>document.getElementById(id);function setField(id,v){$(id).value=v}function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}function toast(t){let e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>e.style.display='none',2200)}
+function ctx(){return{store:$('store').value.trim(),dishes:$('dishes').value.trim(),people:$('people').value.trim(),scene:$('scene').value.trim(),style:$('style').value,depth:$('depth').value,mode:$('mode').value,postType:$('postType').value,sellingPoints:$('sellingPoints').value.trim()}}
+function saveDefaults(){localStorage.setItem(DEFAULT_KEY,JSON.stringify(ctx()));toast('设置已保存')}function loadDefaults(){try{let d=JSON.parse(localStorage.getItem(DEFAULT_KEY)||'null');if(d)Object.entries(d).forEach(([k,v])=>$(k)&&($(k).value=v))}catch(e){}}
+function switchMain(n){document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.main===n));document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));$('main-'+n).classList.add('active');if(n==='learn')renderLearn()}
+function switchCreate(t){createTask=t;document.querySelectorAll('[data-create]').forEach(b=>b.classList.toggle('active',b.dataset.create===t));renderCreate()}function switchAnalyze(t){analyzeTask=t;document.querySelectorAll('[data-analyze]').forEach(b=>b.classList.toggle('active',b.dataset.analyze===t));renderAnalyze()}
+function resultCard(id){return `<div class="card"><div class="cardhead"><div><h3>生成结果</h3><p>可复制或保存进学习库。</p></div><div class="actions"><button class="btn soft" onclick="copyResult('${id}')">复制</button><button class="btn ghost" onclick="saveResult()">保存学习</button></div></div><div id="${id}" class="result"><span class="placeholder">等待生成内容…</span></div></div>`}
+function renderCreate(){let m=META[createTask];$('createBox').innerHTML=`<div class="card"><div class="cardhead"><div><h3>${m[0]}</h3><p>${m[1]}</p></div><span class="badge">${$('mode').selectedOptions[0].text}</span></div><div class="grid"><div><label>${m[2]}</label><textarea id="extra" placeholder="${m[3]}"></textarea><div class="actions"><button class="btn primary" onclick="runCreate()">AI 生成</button><button class="btn ghost" onclick="runLocal()">本地兜底</button><button class="btn soft" onclick="rerollLocal()">换一换</button></div><div class="help">本地兜底会识别学生、考研党、上班族等不同人群；“换一换”不会改变左侧信息，会切换不同钩子、场景和种草角度。</div></div><div class="mini"><h4>本模块输出</h4><div class="help">${guide(createTask)}</div></div></div></div>${resultCard('createResult')}`}
+function guide(t){return{titles:'20个普通标题、5个爆款标题、5个低风险标题、5条评论引导。',post:'标题参考、完整正文、标签、门店结尾、图片建议。',tags:'标签分类和可直接复制的组合。',replies:'正向、问价、问门店、负面反馈和互动回复。',storeDiff:'三店的人群、场景、标题、正文角度、图片和标签。'}[t]}
+function setResult(id,t,load=false){let e=$(id);e.textContent=t;e.classList.toggle('loading',load)}function copyResult(id){navigator.clipboard.writeText($(id)?.textContent||'');toast('已复制')}
+async function runCreate(){if($('mode').value==='local'){runLocal();return}setResult('createResult','AI 正在生成，请稍等…',true);try{let t=await callAI(createTask,$('extra').value,[]);setResult('createResult',t);lastResult=t;lastType=learnType(createTask)}catch(e){if($('mode').value==='auto'){runLocal()}else setResult('createResult',`AI 调用失败：${e.message}\n\n可点击“本地兜底”继续。`)}}
+function runLocal(){
+  const text=localGenerate(createTask,false);
+  setResult('createResult',text);
+  lastResult=text;
+  lastType=learnType(createTask);
+}
+function rerollLocal(){
+  const text=localGenerate(createTask,true);
+  setResult('createResult',text);
+  lastResult=text;
+  lastType=learnType(createTask);
+  toast('已切换新的本地种草角度');
+}
+function nextLocalIndex(task,count,reroll){
+  if(reroll)localVariant[task]=(localVariant[task]+1)%count;
+  return localVariant[task]%count;
+}
+function uniqueLocal(arr){return [...new Set(arr.filter(Boolean))]}
+function rotateLocal(arr,count,offset=0){
+  if(!arr.length)return[];
+  const out=[];
+  for(let i=0;i<count;i++)out.push(arr[(offset+i)%arr.length]);
+  return out;
+}
+function localAudienceProfile(c){
+  const text=`${c.people} ${c.scene} ${c.store}`;
+  if(/上班|白领|打工|公司|写字楼/.test(text)){
+    return{
+      key:'office',name:'上班族',address:'打工人',
+      pain:'午休时间不长，最怕点到重油外卖，吃完下午直接进入低电量模式',
+      need:'省时间、口味稳、吃完不犯困，也不想每天靠咖啡硬扛',
+      scene:'工作日午餐、工位吃饭、加班前补充能量',
+      benefit:'吃得饱但不压状态，下午继续工作也更轻松',
+      emotion:'忙归忙，也不想把午餐吃成随便应付',
+      cta:'上班午餐你最在意口味、分量还是吃完不困？',
+      visual:'电脑键盘、工牌、便签、咖啡杯和真实工位'
+    };
+  }
+  if(/考研|考公|自习|图书馆/.test(text)){
+    return{
+      key:'exam',name:'考研党',address:'备考人',
+      pain:'自习进入状态后不想为吃饭纠结太久，吃太油容易困，吃太少又扛不到晚上',
+      need:'节省选择时间、稳定续航、吃完不撑，下午还能继续坐得住',
+      scene:'图书馆自习后、考研午餐、晚自习前',
+      benefit:'把“今天吃什么”快速解决，减少备考期间不必要的内耗',
+      emotion:'复习已经够费脑了，吃饭这道题最好有人提前给答案',
+      cta:'备考期间你更怕吃太油，还是吃不饱？',
+      visual:'考研笔记、荧光笔、平板、冰美式和图书馆桌面'
+    };
+  }
+  if(/河西大学城|中南大学|湖南师范大学|湖师大|湖南大学|湖大/.test(text)){
+    return{
+      key:'hexi',name:'河西大学城学生',address:'河西大学城宝子',
+      pain:'中南、湖师大、湖大课程和自习节奏都不一样，但饭点的共同难题都是：选择很多，真正想吃的却很难快速决定',
+      need:'既要适合下课回宿舍，也要适合图书馆自习和考研备考；菜品要有变化、能吃饱、又不想太油',
+      scene:'中南大学、湖南师范大学、湖南大学下课后，图书馆自习后，宿舍午晚餐',
+      benefit:'覆盖不同校园节奏，到饭点不用重新筛选一遍外卖，也能兼顾饱腹感和下午状态',
+      emotion:'大学城吃的很多，但每天认真选一顿饭，还是会把人选到没耐心',
+      cta:'中南、湖师大、湖大的宝子，你们学校附近最想多安排哪一类菜？',
+      visual:'大学城校园桌面、考研笔记、课本、平板、咖啡和真实宿舍饭盒'
+    };
+  }
+  if(/第一师范|一师范/.test(text)){
+    return{
+      key:'ysf',name:'第一师范学生',address:'一师范宝子',
+      pain:'下课后回宿舍已经很累，还要刷半天外卖，最后经常随便点一份',
+      need:'价格和搭配都日常、宿舍吃方便、菜品能轮换，不想连续几天同一个味道',
+      scene:'下课后宿舍午餐、晚课前、宿舍追剧吃饭',
+      benefit:'不用自己重新搭配，一盒里有肉有菜，吃饭更省心',
+      emotion:'大学生活可以忙，但每天的饭不用一直将就',
+      cta:'一师范宝子最想看牛肉类、虾仁类还是鸡排类？',
+      visual:'宿舍书桌、教材、校园卡、平板动画和水杯'
+    };
+  }
+  if(/林科大|铁道/.test(text)){
+    return{
+      key:'lkd',name:'林科大学生',address:'林科大宝子',
+      pain:'晚八下课或者自习结束后，最怕饭点选择困难，刷半天还是不知道吃什么',
+      need:'下课后方便、真实能吃饱、每天有变化，晚上吃也不想太油',
+      scene:'晚八下课后、图书馆自习后、宿舍午晚餐',
+      benefit:'饭点不用再做选择题，菜单轮换也不容易吃腻',
+      emotion:'课可以上，自习可以去，但饭点真的不想再动脑',
+      cta:'林科大宝子最希望下周多安排哪一类菜？',
+      visual:'宿舍桌面、林科大校园感、笔记本、平板和真实饭盒'
+    };
+  }
+  return{
+    key:'student',name:'大学生',address:'学生党',
+    pain:'下课后又饿又累，打开外卖软件反复刷，最后常常还是随便应付',
+    need:'日常能吃饱、有肉有菜、菜品不重复，宿舍和自习室都方便',
+    scene:'下课后宿舍午餐、图书馆自习后、晚课前',
+    benefit:'减少饭点选择困难，也让一天里至少有一顿饭吃得舒服',
+    emotion:'学习已经够忙了，好好吃饭不该变成另一道难题',
+    cta:'学生党午餐最看重口味、分量还是不容易腻？',
+    visual:'课本、笔记、平板、水杯和自然生活感桌面'
+  };
+}
+function localStoreProfile(c){
+  const s=c.store||'门店';
+  if(/梅溪湖/.test(s))return{
+    area:'梅溪湖、第一师范及周边写字楼',
+    keywords:['梅溪湖美食','第一师范美食','梅溪湖轻食','一师范午餐'],
+    angle:'学生宿舍与写字楼午餐双场景',
+    storeScene:'第一师范下课后、梅溪湖工作日午餐'
+  };
+  if(/林科大/.test(s))return{
+    area:'林科大、铁道学院及周边写字楼',
+    keywords:['林科大美食','铁道学院美食','林科大轻食','林科大吃什么'],
+    angle:'晚课、自习、宿舍午晚餐',
+    storeScene:'晚八下课、图书馆自习后、宿舍吃饭'
+  };
+  return{
+    area:'中南大学、湖南大学、湖南师范大学及河西大学城周边',
+    keywords:['河西大学城美食','中南大学美食','湖南大学美食','湖南师范大学美食'],
+    angle:'考研自习、大学城午晚餐、一周菜单',
+    storeScene:'图书馆自习、考研午餐、宿舍晚餐'
+  };
+}
+function localDishInfo(c){
+  const list=(c.dishes||'').split(/[、,，\n]+/).map(x=>x.trim()).filter(Boolean);
+  return{
+    list,
+    main:list[0]||'主荤',
+    side:list[1]||'半荤/蛋类',
+    veg:list[2]||'时蔬',
+    all:list.join('、')||'主荤、半荤、时蔬'
+  };
+}
+function localLearnedLines(types,limit=3){
+  try{
+    return getLearn().filter(x=>types.includes(x.type)).flatMap(x=>String(x.content||'').split(/\n+/)).map(x=>x.replace(/^\d+[.、]\s*/,'').trim()).filter(Boolean).slice(0,limit);
+  }catch(e){return[]}
+}
+function localTitlePackage(c,p,s,d,variant){
+  const learned=localLearnedLines(['爆款标题','开头钩子'],4);
+  const normal=uniqueLocal([
+    ...learned,
+    `${c.store}${p.address}不用每天纠结吃什么了`,
+    `一周不重样，这才是${p.name}需要的午晚餐`,
+    `${c.store}附近这份菜单，直接治好饭点选择困难`,
+    `${p.address}中午晚上都不想将就？这份菜单可以收藏`,
+    `${p.scene}不知道吃什么，这组搭配可以直接抄`,
+    `${c.store}吃饭指南：每天换着吃真的太省心了`,
+    `今天这盒不是摆拍餐，是${p.name}能认真吃完的一顿饭`,
+    `${d.main}+${d.side}+${d.veg}，这顿饭的安全感够了`,
+    `不想天天吃同一个味道？这家每周都会换菜单`,
+    `${p.address}别再乱凑午饭了，有肉有菜才像一顿饭`,
+    `${c.scene}吃这个，比随便啃面包舒服太多`,
+    `${c.store}附近想吃清爽一点，我会选这一盒`,
+    `谁懂啊，饭点不用做选择题真的太幸福了`,
+    `${p.name}的一顿正经饭：有肉、有菜、也有主食`,
+    `今天不吃“减脂餐坐牢”，吃一份中国胃轻食`,
+    `这份${d.main}把我从“随便吃点”里拉回来了`,
+    `${p.scene}的快乐，是打开饭盒就不用再想吃什么`,
+    `一盒解决午餐选择困难，日常吃也不容易腻`,
+    `${c.store}附近这组${d.main}搭配，看着清爽吃着满足`,
+    `${p.address}可以收藏的一周菜单参考来了`,
+    `不想点重油外卖的时候，这份搭配刚刚好`,
+    `每天有新搭配，${p.name}吃饭终于不用摆烂了`,
+    `${p.emotion}，所以我会选这种菜单型轻食`,
+    `${c.store}附近的一顿饭，也可以吃得很认真`,
+    `有肉有菜有主食，才是${p.name}需要的轻食`,
+    `${p.scene}吃什么？这一盒已经帮你搭配好了`,
+    `今天这份${d.all}，属于吃完不会后悔系列`,
+    `${c.store}附近不是没有饭，是缺一份不容易腻的饭`,
+    `${p.address}的饭点自救：收藏这份菜单就够了`,
+    `认真吃饭这件事，真的会让${p.name}的一天顺很多`
+  ]);
+  const hot=uniqueLocal([
+    `${c.store}${p.address}先别划走！这份菜单真的很懂你`,
+    `谁懂啊！${p.pain}`,
+    `我宣布：${p.scene}最幸福的瞬间就是打开这一盒`,
+    `这不是网红摆拍餐，是${p.name}能认真吃完的一顿饭`,
+    `${d.main}+${d.side}+${d.veg}，直接把“今天吃什么”解决了`,
+    `${p.address}饭点别再内耗了，这组搭配可以直接抄`,
+    `救命！一周不重样到底能省掉多少吃饭纠结`,
+    `${c.store}附近吃到这盒，我真的想替${p.name}多说两句`
+  ]);
+  const safe=uniqueLocal([
+    `${c.store}附近日常午餐分享：${d.all}`,
+    `${p.name}的一顿简单午餐，搭配比较完整`,
+    `${c.scene}吃一份清爽点的三拼饭`,
+    `今天午餐记录：有肉有菜的一盒饭`,
+    `${c.store}附近轻食健康餐日常分享`,
+    `${p.name}午餐搭配参考，简单但不随便`,
+    `记录一份口味不重、日常能吃饱的饭`
+  ]);
+  const comments=[
+    p.cta,
+    `${d.main}、${d.side}、${d.veg}，你最先夹哪一道？`,
+    `这组搭配满分10分，你们会打几分？`,
+    `下一期想看牛肉类、虾仁类、鸡肉类还是排骨类？`,
+    `${s.area}还有哪些同学也经常饭点选择困难？`,
+    `你们更喜欢宿舍场景、图书馆场景还是工位午餐？`
+  ];
+  const offset=(variant*7)%normal.length;
+  return `【日常种草标题 20 个】
+${rotateLocal(normal,20,offset).map((x,i)=>`${i+1}. ${x}`).join('\n')}
+
+【爆款钩子标题 5 个】
+${rotateLocal(hot,5,variant%hot.length).map((x,i)=>`${i+1}. ${x}`).join('\n')}
+
+【低风险标题 5 个】
+${rotateLocal(safe,5,variant%safe.length).map((x,i)=>`${i+1}. ${x}`).join('\n')}
+
+【评论区引导 5 条】
+${rotateLocal(comments,5,variant%comments.length).map((x,i)=>`${i+1}. ${x}`).join('\n')}
+
+【本组内容定位】
+目标人群：${p.name}
+核心痛点：${p.pain}
+建议封面场景：${p.visual}`;
+}
+function localPostPackage(c,p,s,d,variant){
+  const titleSets=[
+    [
+      `${c.store}${p.address}不用每天纠结吃什么了`,
+      `一周不重样，这才是${p.name}需要的午晚餐`,
+      `${c.store}附近这份菜单，直接治好吃饭选择困难`,
+      `${p.scene}不知道吃什么？这篇可以先收藏`,
+      `每天换着吃，${p.name}吃饭终于不用摆烂了`
+    ],
+    [
+      `${p.address}别把午餐吃成“随机应付”`,
+      `${c.store}附近想吃清爽一点，我会选这一盒`,
+      `${d.main}+${d.side}+${d.veg}，今天吃什么不用再想`,
+      `不是摆拍餐，是能认真吃完的一顿饭`,
+      `${p.name}的一顿正经饭：有肉有菜也有主食`
+    ],
+    [
+      `谁懂啊，饭点不用做选择题真的太省心了`,
+      `${c.store}吃饭指南：一周菜单可以直接抄`,
+      `${c.scene}最怕吃太油？这组搭配刚刚好`,
+      `中国胃轻食终于不是只吃草了`,
+      `${p.address}可以收藏的午晚餐参考来了`
+    ],
+    [
+      `${c.store}附近这份饭，解决的不只是一顿午餐`,
+      `${p.emotion}`,
+      `${p.name}需要的不是网红餐，是每天都能吃的饭`,
+      `有肉、有菜、有主食，这才是一顿完整午餐`,
+      `${c.scene}打开这盒，感觉今天没有亏待自己`
+    ]
+  ];
+  const bodies=[
+`${c.store}的${p.address}们，
+每天最让人头大的事情又来了：
+
+中午吃什么？
+晚上吃什么？
+
+${p.pain}。
+
+所以我最近越来越喜欢这种：
+${c.sellingPoints}。
+
+今天这份是：${d.all}。
+
+${d.main}负责香和满足感，
+${d.side}让口味不会太单一，
+${d.veg}把整盒拉得清爽一点。
+
+它不是那种“看起来健康，吃起来很没劲”的轻食，
+也不是吃完以后只想趴着的重油外卖。
+
+更像是一份适合${p.name}日常反复吃的中国胃轻食：
+有肉。
+有菜。
+有主食。
+有香味。
+吃得饱，也吃得舒服。
+
+对${p.name}来说，真正省心的不是某一道菜有多惊艳，
+而是到饭点不用再重新搭配，
+中午晚上还能换着吃，不容易连续几天一个味道。
+
+${p.scene}的时候来一份，
+${p.benefit}。
+
+这种感觉就像：
+有人提前帮你把“今天吃什么”这道题写好答案了。
+
+如果你也经常在${s.area}纠结饭点吃什么，
+可以先把这篇收藏起来。
+
+${p.cta}
+评论区告诉我，我继续整理你们更想看的搭配。
+
+📍饱里宝气·${c.store}
+覆盖：${s.area}
+⏰每天现做不隔夜｜每周换菜单`,
+
+`${p.emotion}。
+
+今天不写夸张安利，
+就真实记录一份${p.name}会愿意认真吃完的饭。
+
+菜品是：${d.all}。
+
+第一口是${d.main}带来的满足感，
+中间有${d.side}补充口味和层次，
+最后再用${d.veg}把整体拉回清爽。
+
+我觉得它适合${p.name}的原因，不只是“看起来健康”。
+
+更重要的是：
+✅ 不需要自己重新搭配  
+✅ 有主菜，不会吃完还想找零食  
+✅ 有蔬菜，不会一整盒都很油  
+✅ 口味够，但不会把下午状态吃没  
+✅ 菜单会轮换，日常吃不容易腻  
+
+${p.scene}的时候，
+最需要的就是这种不花太多时间选择、打开就能吃的饭。
+
+${p.need}，
+而这组搭配刚好把这些需求放进了一盒里。
+
+画面也不用拍得太精致。
+饭盒、${p.visual}，
+稍微保留一点真实生活感，
+反而更像我们每天真正会吃的一顿饭。
+
+如果你在${s.area}，
+又经常不知道午餐晚餐怎么选，
+这份可以先放进备选。
+
+${p.cta}
+
+📍饱里宝气·${c.store}
+⏰每天现做不隔夜｜每周换菜单`,
+
+`${p.address}饭点自救指南来了。
+
+${p.pain}，
+真的会把一顿饭变成新的内耗。
+
+今天这组是：
+${d.all}。
+
+为什么我觉得它值得被收藏？
+
+1️⃣ 搭配完整  
+${d.main}、${d.side}、${d.veg}都在，一盒里肉、配菜、蔬菜和主食都有。
+
+2️⃣ 更适合中国胃  
+不是纯水煮，也不是只吃草，口味有存在感，但不会整盒都很重。
+
+3️⃣ 场景很明确  
+${p.scene}、${s.storeScene}都能对应上。
+
+4️⃣ 菜单会变化  
+${c.sellingPoints}，比连续几天吃同一个味道友好很多。
+
+5️⃣ 不是只适合拍照  
+它更像一份真的能吃完、吃完还觉得舒服的日常饭。
+
+对${p.name}来说，
+吃饭最好是省心一点、稳定一点，
+不要每到饭点都重新做选择题。
+
+如果下一周菜单里可以多安排一类，
+你会选牛肉、虾仁滑蛋、鸡排还是排骨？
+
+评论区投个票，
+我看看${c.store}附近哪一类最受欢迎。
+
+📍饱里宝气·${c.store}
+覆盖：${s.area}
+⏰每天现做不隔夜｜每周换菜单`,
+
+`这份饭看起来清清爽爽，
+但吃起来其实很有满足感。
+
+今天是：${d.all}。
+
+一开始最担心的是：
+轻食会不会没味道？
+分量会不会太空？
+吃完会不会很快又饿？
+
+实际更像是一份“正常饭的轻负担版本”。
+
+${d.main}让整盒有主心骨，
+${d.side}让每一口不至于太重复，
+${d.veg}负责把油腻感按住。
+
+对${p.name}来说，
+真正需要的不是短暂的新鲜感，
+而是${p.need}。
+
+再加上${c.sellingPoints}，
+它解决的就不只是一顿饭，
+而是每天都会出现的饭点选择困难。
+
+${p.scene}的时候，
+不用刷半天外卖，
+不用重新计算怎么搭配，
+打开饭盒就能认真吃十几分钟。
+
+忙完一上午、上完课、结束一轮自习以后，
+这种“终于可以不用动脑吃饭”的感觉，
+真的很具体。
+
+如果你也在${s.area}，
+这份可以先收藏。
+
+${p.cta}
+
+📍饱里宝气·${c.store}
+⏰每天现做不隔夜｜每周换菜单`
+  ];
+  const tags=uniqueLocal([
+    '#饱里宝气','#长沙轻食','#中式轻食','#轻食健康餐',
+    ...s.keywords.map(x=>'#'+x),
+    '#'+p.name,'#今天吃什么','#午餐吃什么','#晚餐吃什么',
+    '#一周菜单','#一周不重样','#中国胃轻食',
+    ...d.list.map(x=>'#'+x)
+  ]).slice(0,16).join(' ');
+  const images=[
+    `封面：完整饭盒占画面60%-70%，文字用“${c.store}${p.address}不用纠结吃什么了”`,
+    `场景图：${p.visual}，保留真实生活感，不要拍成商业棚拍`,
+    `菜品近景：突出${d.main}纹理、${d.side}层次和${d.veg}清爽感`,
+    `信息图：一周不重样、中午晚上菜品不同、每天现做不隔夜`,
+    `结尾图：门店覆盖范围 + 评论选择题`
+  ];
+  const strategies=[
+    `前80字先写${p.name}的真实痛点：${p.pain}`,
+    `中段不要只写“好吃”，要补充菜单轮换、场景和吃完感受`,
+    `正文使用短句换行，每3-5行出现一个新信息点，提升完读率`,
+    `结尾用具体选择题引导评论：${p.cta}`,
+    `封面必须让用户一眼看到“写给谁 + 解决什么问题”`
+  ];
+  const idx=variant%bodies.length;
+  return `【标题参考 5 个】
+${titleSets[idx].map((x,i)=>`${i+1}. ${x}`).join('\n')}
+
+【小红书正文】
+${bodies[idx]}
+
+【推荐标签】
+${tags}
+
+【图片建议】
+${images.map((x,i)=>`${i+1}. ${x}`).join('\n')}
+
+【运营逻辑】
+${strategies.map((x,i)=>`${i+1}. ${x}`).join('\n')}`;
+}
+function localTagPackage(c,p,s,d,variant){
+  const groups=[
+    ['#饱里宝气','#中式轻食','#轻食健康餐','#长沙轻食'],
+    s.keywords.map(x=>'#'+x),
+    ['#'+p.name,'#'+p.address,'#学生党午餐','#大学生吃什么','#上班族午餐','#考研党午餐'],
+    d.list.map(x=>'#'+x),
+    ['#今天吃什么','#午餐吃什么','#晚餐吃什么','#一周菜单','#一周不重样','#中国胃轻食','#认真吃饭']
+  ];
+  const audience=groups[2].filter(x=>{
+    if(p.key==='office')return /上班/.test(x);
+    if(p.key==='exam')return /考研|大学生/.test(x);
+    return !/上班族/.test(x);
+  });
+  const recommended=uniqueLocal([
+    ...groups[0],...groups[1].slice(0,3),...audience.slice(0,3),
+    ...groups[3].slice(0,3),...groups[4]
+  ]);
+  const rotated=rotateLocal(recommended,Math.min(16,recommended.length),(variant*3)%recommended.length);
+  return `【品牌与品类词】
+${groups[0].join(' ')}
+
+【区域与门店词】
+${groups[1].join(' ')}
+
+【目标人群词】
+${audience.join(' ')}
+
+【菜品搜索词】
+${groups[3].join(' ')}
+
+【场景与内容词】
+${groups[4].join(' ')}
+
+【本次建议组合】
+${rotated.join(' ')}
+
+【使用建议】
+1. 每篇建议使用8-15个高相关标签，不要把所有标签全部堆上。
+2. 保留品牌词和门店词，根据${p.name}替换人群词。
+3. 菜品词选择1-3个即可，优先使用用户真的会搜索的菜名。
+4. 同一内容发不同门店时，区域词和人群词至少替换40%。`;
+}
+function localReplyPackage(c,p,s,d,variant){
+  const banks=[
+`【正向夸赞】
+1. 哈哈真的，这组就是${p.name}日常吃很稳的类型，不花哨但很舒服～
+2. 对！重点是能认真吃完，不是只适合拍照的一盒～
+3. 谢谢喜欢！有肉有菜的一顿饭，吃起来确实会更安心。
+
+【问价格】
+不同套餐和餐次会有差异，可以问${c.store}客服看最新安排，会更准确～
+
+【问门店/范围】
+这份是饱里宝气·${c.store}，主要覆盖${s.area}，可以联系门店确认具体位置和范围～
+
+【问菜单】
+菜单每周都会更新，中午晚上菜品也会换，想看哪一类也可以评论告诉我们～
+
+【互动引导】
+${p.cta}`,
+
+`【问分量】
+每个人饭量不一样，建议结合自己的用餐习惯选择套餐；我们更希望大家吃得舒服，而不是勉强硬撑～
+
+【问口味】
+整体更偏日常中国胃，不是纯水煮，也不会做得特别重口，像${d.main}这种主菜会保留香味和满足感～
+
+【问是否容易腻】
+每周菜单会换，中午晚上也会轮换搭配，比连续吃同一套更不容易腻～
+
+【配送咨询】
+不同门店覆盖范围会有差异，联系${c.store}客服确认会更准确，也避免让你白等～
+
+【互动引导】
+${d.main}、${d.side}、${d.veg}，你最先夹哪一道？`,
+
+`【收到建议】
+谢谢你认真提建议，我们先把这个反馈记下来，也会同步给门店继续调整。
+
+【觉得不好吃】
+口味确实会因人而异。如果方便的话，可以告诉我们具体是哪道菜、哪里不合适，这样我们更容易针对性优化。
+
+【觉得太油/太淡】
+收到，我们会把口味反馈记录下来。不同菜品适合的调味不一样，我们会继续在“有味道”和“低负担”之间调整。
+
+【配送体验问题】
+抱歉影响了你的用餐体验，可以把具体门店和情况反馈给客服，我们会尽快核实处理。
+
+【互动修复】
+也想听听你更偏好的口味：清爽一点、家常一点，还是香辣一点？`,
+
+`【学生场景回复】
+下课后能少纠结一次吃什么，真的会轻松很多～
+
+【备考场景回复】
+复习已经够费脑了，吃饭这道题确实适合直接抄答案～
+
+【上班场景回复】
+工作日午餐最重要的就是吃完不压状态，这点太真实了。
+
+【收藏引导】
+可以先收藏，下次饭点脑子卡住的时候直接翻出来看～
+
+【关注引导】
+后面会继续更新${c.store}菜单和不同菜品搭配，想看的话可以点个关注～`
+  ];
+  return banks[variant%banks.length];
+}
+function localStoreDiffPackage(c,d,variant){
+  const banks=[
+`【梅溪湖店】
+目标人群：第一师范学生、梅溪湖周边写字楼上班族
+核心痛点：学生下课后不想刷外卖；上班族工作日午餐怕油腻犯困
+内容钩子：梅溪湖附近不想随便吃，我会选这份${d.main}
+正文角度：清爽但不寡淡、学生和上班族都能代入
+图片场景：第一师范宿舍桌面 / 梅溪湖工位午餐
+标签：#梅溪湖美食 #第一师范美食 #梅溪湖轻食 #工作餐
+
+【林科大店】
+目标人群：林科大学生、铁道学院学生、周边上班族
+核心痛点：晚八下课、图书馆自习后饭点选择困难
+内容钩子：林科大下课后吃什么？这盒${d.main}很稳
+正文角度：真实能吃饱、晚上吃不太油、每周换菜单
+图片场景：宿舍桌面 / 图书馆笔记 / 晚课后
+标签：#林科大美食 #铁道学院美食 #林科大吃什么 #宿舍午餐
+
+【河西大学城店】
+目标人群：中南大学、湖大、湖师大、考研考公人群
+核心痛点：自习状态不想被吃饭打断，吃太油下午容易困
+内容钩子：河西大学城考研党午餐，这份可以直接抄作业
+正文角度：学习续航、一周不重样、减少选择内耗
+图片场景：图书馆桌面 / 考研笔记 / 咖啡和平板
+标签：#河西大学城美食 #中南大学美食 #湖南大学美食 #考研党午餐`,
+
+`【同一组菜品的三店差异化】
+菜品：${d.all}
+
+梅溪湖店：
+- 标题写“第一师范下课后”或“梅溪湖工作日午餐”
+- 正文强调学生省心、上班族不犯困
+- 首图使用宿舍桌面或工位场景
+
+林科大店：
+- 标题写“晚八下课”“林科大吃什么”
+- 正文强调宿舍真实吃饭、晚餐不太油
+- 首图使用校园笔记、平板、宿舍桌面
+
+河西大学城店：
+- 标题写“考研党午餐”“图书馆续航”
+- 正文强调减少选择时间、一周菜单
+- 首图使用考研笔记、咖啡、图书馆桌面
+
+【避免账号同质化】
+1. 标题不要只替换门店名。
+2. 开头痛点、人群、图片场景同时替换。
+3. 标签至少替换40%。
+4. 同一组图片不要在多个账号原样重复。`,
+
+`【门店内容排期建议】
+
+梅溪湖店：
+周一：第一师范宿舍午餐
+周三：梅溪湖上班族工作餐
+周五：一周菜单合集
+重点：学生+上班族双人群
+
+林科大店：
+周一：晚八下课吃什么
+周二：图书馆自习后午餐
+周四：宿舍真实开饭
+周六：下周菜单预告
+重点：提高林科大本地曝光和饭点代入
+
+河西大学城店：
+周一：考研党续航午餐
+周三：中南/湖大/湖师大吃饭指南
+周五：一周不重样合集
+重点：图书馆、自习、考研场景`
+  ];
+  return banks[variant%banks.length];
+}
+function localGenerate(t,reroll=false){
+  const c=ctx(),p=localAudienceProfile(c),s=localStoreProfile(c),d=localDishInfo(c);
+  const counts={titles:4,post:4,tags:3,replies:4,storeDiff:3};
+  const variant=nextLocalIndex(t,counts[t]||3,reroll);
+  if(t==='titles')return localTitlePackage(c,p,s,d,variant);
+  if(t==='post')return localPostPackage(c,p,s,d,variant);
+  if(t==='tags')return localTagPackage(c,p,s,d,variant);
+  if(t==='replies')return localReplyPackage(c,p,s,d,variant);
+  return localStoreDiffPackage(c,d,variant);
+}
+function learnType(t){return{titles:'爆款标题',post:'正文案例',tags:'话题标签',replies:'评论回复',storeDiff:'品牌规则',diagnose:'诊断案例',breakdown:'爆款拆解'}[t]||'内容案例'}function saveResult(){if(!lastResult)return toast('请先生成内容');let d=getLearn();d.unshift({id:Date.now().toString(36),type:lastType,content:lastResult,note:'V14.2 生成结果'});setLearn(d);toast('已保存学习库')}
+function renderAnalyze(){let diag=analyzeTask==='diagnose';$('analyzeBox').innerHTML=`<div class="card"><div class="cardhead"><div><h3>${diag?'AI 笔记诊断':'AI 爆款拆解'}</h3><p>${diag?'诊断标题、正文、图片、钩子、完读率和风险。':'拆解标题、结构、情绪、场景和可模仿方式。'}</p></div><span class="badge">支持图片</span></div><div class="grid"><div><label>${diag?'笔记标题':'参考爆款标题'}</label><input id="aTitle" placeholder="粘贴标题"><label>${diag?'笔记正文':'参考爆款正文 / 口播'}</label><textarea id="aBody" style="min-height:165px" placeholder="粘贴正文或描述"></textarea><div class="actions"><button class="btn primary" onclick="runAnalyze()">${diag?'开始 AI 诊断':'开始 AI 拆解'}</button><button class="btn ghost" onclick="localAnalyze()">本地规则</button><button class="btn soft" onclick="rerollLocalAnalyze()">换一换</button></div></div><div><label>上传截图（最多3张）</label><div class="upload" onclick="$ ('aFiles')"><div onclick="$ ('aFiles')"><b>点击上传封面 / 正文截图</b><div class="help">图片会压缩后交给 Gemini</div></div></div><input id="aFiles" type="file" accept="image/*" multiple hidden onchange="handleFiles(this.files)"><div id="preview" class="preview"></div></div></div></div>${resultCard('analyzeResult')}`;let up=document.querySelector('.upload');up.onclick=()=>$('aFiles').click();renderPreview()}
+async function handleFiles(fs){images=[];for(const f of Array.from(fs).filter(x=>x.type.startsWith('image/')).slice(0,3)){try{images.push(await compress(f))}catch(e){}}renderPreview()}function renderPreview(){if($('preview'))$('preview').innerHTML=images.map(x=>`<img src="${x}">`).join('')}function compress(f){return new Promise((ok,no)=>{let r=new FileReader;r.onerror=no;r.onload=()=>{let i=new Image;i.onerror=no;i.onload=()=>{let w=i.width,h=i.height,m=950;if(Math.max(w,h)>m){let s=m/Math.max(w,h);w=Math.round(w*s);h=Math.round(h*s)}let c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(i,0,0,w,h);ok(c.toDataURL('image/jpeg',.72))};i.src=r.result};r.readAsDataURL(f)})}
+async function runAnalyze(){if($('mode').value==='local'){localAnalyze();return}setResult('analyzeResult','AI 正在分析，请稍等…',true);try{let ex=`标题：${$('aTitle').value}\n正文：${$('aBody').value}`;let t=await callAI(analyzeTask,ex,images);setResult('analyzeResult',t);lastResult=t;lastType=learnType(analyzeTask)}catch(e){if($('mode').value==='auto')localAnalyze();else setResult('analyzeResult',`AI 调用失败：${e.message}\n\n可点击“本地规则”继续。`)}}
+function localAnalyze(){
+  const text=localAnalyzeGenerate(false);
+  setResult('analyzeResult',text);
+  lastResult=text;
+  lastType=learnType(analyzeTask);
+}
+function rerollLocalAnalyze(){
+  const text=localAnalyzeGenerate(true);
+  setResult('analyzeResult',text);
+  lastResult=text;
+  lastType=learnType(analyzeTask);
+  toast('已切换新的本地分析角度');
+}
+function localAnalyzeGenerate(reroll=false){
+  const title=$('aTitle').value.trim(),body=$('aBody').value.trim(),c=ctx();
+  const p=localAudienceProfile(c),s=localStoreProfile(c);
+  const titleScore=Math.min(35,10+(title.length>=8&&title.length<=28?10:4)+(/吃什么|不重样|收藏|附近|宝子|指南|不用纠结/.test(title)?10:3)+(/林科大|梅溪湖|大学城|第一师范/.test(title)?5:0));
+  const bodyScore=Math.min(35,8+(body.length>250?8:3)+(body.length>600?5:0)+(/饭点|选择困难|中午吃什么|晚上吃什么/.test(body)?7:0)+(/菜单|不重样|现做不隔夜|中国胃/.test(body)?7:0));
+  const interactScore=Math.min(15,(/评论|你们|想看|收藏|关注|告诉我/.test(body)?13:5));
+  const visualScore=Math.min(15,images.length>=3?14:images.length?9:5);
+  const total=titleScore+bodyScore+interactScore+visualScore;
+  const variants=3;
+  const idx=nextLocalIndex(analyzeTask,variants,reroll);
+
+  if(analyzeTask==='breakdown'){
+    const banks=[
+`【爆款结构拆解】
+
+一、标题为什么能让人停下来
+- 是否在前半句出现人群、区域或饭点痛点
+- 是否让用户立刻知道“这篇和我有关”
+- 是否提供了收藏理由，而不是只写“好吃”
+
+二、正文为什么能提高完读
+- 开头先写${p.name}的真实处境：${p.pain}
+- 中段持续补充菜单、场景、吃完感受，不只重复菜品
+- 短句换行，每3-5行出现一个新信息点
+
+三、图片为什么能建立信任
+- 完整饭盒负责展示搭配
+- 菜品近景负责展示真实纹理
+- ${p.visual}负责建立人群代入
+- 门店信息图负责承接转化
+
+四、饱里宝气可模仿方向
+- 标题：${c.store}${p.address}不用每天纠结吃什么了
+- 正文：饭点痛点 → 菜单价值 → 菜品体验 → 场景代入 → 互动
+- 评论：${p.cta}
+
+五、避免照搬
+- 不只替换门店名
+- 人群、场景、图片和结尾问题都要同步变化`,
+
+`【爆款内容的流量逻辑】
+
+1. 点击率
+标题要同时包含：${c.store} / ${p.name} / 吃什么或菜单痛点。
+
+2. 完读率
+正文不能一直说“好吃”，需要依次给出：
+- 为什么会纠结
+- 这份饭解决了什么
+- 菜品如何搭配
+- 适合什么时间和场景
+- 为什么值得收藏
+
+3. 收藏率
+菜单更新、一周不重样、午晚不同，属于可反复查看的信息。
+
+4. 评论率
+选择题比“欢迎评论”更有效：
+${p.cta}
+
+5. 转化率
+先种草真实场景，最后再放：
+📍饱里宝气·${c.store}
+覆盖：${s.area}
+
+【改写原则】
+学习结构，不复制原句；把内容变成饱里宝气自己的门店、人群和菜品。`,
+
+`【爆款笔记可复制的五层结构】
+
+第一层：封面钩子
+“${c.store}${p.address}不用每天纠结吃什么了”
+
+第二层：人群共鸣
+“${p.pain}”
+
+第三层：信息价值
+每周菜单、中午晚上不同、中国胃轻食、有肉有菜有主食。
+
+第四层：真实体验
+${p.scene}吃完的状态、口味和饱腹感。
+
+第五层：互动与关注
+“${p.cta}”
+“想看每周菜单更新可以点个关注。”
+
+【图片组合】
+1. 完整饭盒封面
+2. ${c.dishes}近景
+3. ${p.visual}
+4. 一周菜单信息
+5. 门店覆盖和互动问题`
+    ];
+    return banks[idx];
+  }
+
+  const strengths=[];
+  const issues=[];
+  const actions=[];
+  if(/吃什么|不用纠结|菜单|不重样/.test(title))strengths.push('标题有明确饭点痛点或菜单价值，具备点击基础。');
+  else issues.push('标题缺少“吃什么 / 不用纠结 / 菜单 / 不重样”等明确利益点。');
+  if(/林科大|梅溪湖|大学城|第一师范|长沙/.test(`${title}${body}`))strengths.push('包含区域词，有利于校园和同城曝光。');
+  else issues.push('区域词不足，建议在标题前半段或正文前100字加入门店/学校。');
+  if(/饭点|选择困难|下课|自习|上班|午休/.test(body))strengths.push('正文存在真实场景，用户更容易代入。');
+  else issues.push(`场景代入偏弱，建议写清${p.scene}。`);
+  if(/菜单|不重样|现做不隔夜|中国胃|有肉有菜/.test(body))strengths.push('内容有卖点宽度，不只是单纯介绍一道菜。');
+  else issues.push('卖点宽度不足，建议补充菜单轮换、午晚不同、中国胃轻食。');
+  if(/评论|你们|想看|收藏|关注/.test(body))strengths.push('有互动或收藏引导，有利于评论率和后续关注。');
+  else issues.push('缺少具体互动问题，建议使用选择题收尾。');
+
+  actions.push(`标题改成“${c.store}${p.address}不用每天纠结吃什么了”这一类人群+痛点结构。`);
+  actions.push(`开头先写：${p.pain}。`);
+  actions.push('中段加入菜单轮换、菜品层次、吃完状态和真实使用场景。');
+  actions.push(`图片使用：${p.visual}，不要只拍一张孤立饭盒。`);
+  actions.push(`结尾使用：${p.cta}`);
+
+  const variantsText=[
+`【笔记诊断总分】${total}/100
+
+【评分构成】
+标题钩子：${titleScore}/35
+正文结构：${bodyScore}/35
+互动设计：${interactScore}/15
+图片素材：${visualScore}/15
+
+【内容优势】
+${strengths.length?strengths.map((x,i)=>`${i+1}. ${x}`).join('\n'):'暂未识别到明显优势，需要进一步补充内容信息。'}
+
+【主要问题】
+${issues.length?issues.map((x,i)=>`${i+1}. ${x}`).join('\n'):'结构较完整，可继续优化表达和图片。'}
+
+【优先优化动作】
+${actions.map((x,i)=>`${i+1}. ${x}`).join('\n')}
+
+【标题改写参考】
+1. ${c.store}${p.address}不用每天纠结吃什么了
+2. 一周不重样，这才是${p.name}需要的午晚餐
+3. ${c.store}附近这份菜单，直接治好饭点选择困难
+4. ${p.scene}不知道吃什么？这篇可以收藏
+5. 不是摆拍餐，是${p.name}能认真吃完的一顿饭`,
+
+`【流量诊断】
+
+当前综合分：${total}/100
+
+一、点击率问题
+${titleScore>=25?'标题已经有一定钩子，可以进一步压缩字数，把核心利益点提前。':'标题利益点不够靠前，用户第一眼不容易知道为什么要点开。'}
+
+二、完读率问题
+${bodyScore>=25?'正文信息较完整，建议继续保持短句换行。':'正文可能停留在菜品介绍，缺少持续的新信息。'}
+
+三、目标人群适配
+这篇内容应该重点写给：${p.name}
+核心痛点：${p.pain}
+核心利益：${p.benefit}
+
+四、建议正文顺序
+1. 饭点痛点
+2. 菜单价值
+3. 菜品口味与搭配
+4. ${p.scene}
+5. 收藏、评论、关注
+
+五、封面建议
+文字：${c.store}${p.address}不用纠结吃什么了
+场景：${p.visual}`,
+
+`【种草能力诊断】
+
+这篇内容是否具备“安利感”，重点看三件事：
+
+1. 有没有具体对象
+建议明确写给${p.name}，不要只写“大家”。
+
+2. 有没有真实困扰
+建议加入：${p.pain}。
+
+3. 有没有明确解决方案
+饱里宝气提供的不是一句“好吃”，而是：
+- ${c.sellingPoints}
+- ${c.dishes}
+- ${p.benefit}
+
+【评论区设计】
+推荐使用：
+“${p.cta}”
+
+【风险提醒】
+- 避免“最好吃、第一、必吃、天花板”等绝对化词。
+- 不要只堆品牌卖点，要先写用户的生活场景。
+- 图片和正文表达保持一致，避免封面夸张、正文信息不足。`
+  ];
+  return variantsText[idx];
+}
+function getLearn(){try{return JSON.parse(localStorage.getItem(LEARN_KEY)||'[]')}catch(e){return[]}}function setLearn(d){localStorage.setItem(LEARN_KEY,JSON.stringify(d))}function renderLearn(){let d=getLearn(),n={};d.forEach(x=>n[x.type]=(n[x.type]||0)+1);$('learnBox').innerHTML=`<div class="card"><div class="cardhead"><div><h3>持续学习中心</h3><p>优秀内容会作为上下文发送给 Gemini。</p></div><div class="actions"><button class="btn soft" onclick="exportLearn()">导出</button><button class="btn ghost" onclick="importLearn()">导入</button></div></div><div class="stats"><div class="stat"><strong>${d.length}</strong><span class="help">素材总数</span></div><div class="stat"><strong>${n['爆款标题']||0}</strong><span class="help">标题素材</span></div><div class="stat"><strong>${n['正文案例']||0}</strong><span class="help">正文案例</span></div></div></div><div class="card"><div class="cardhead"><div><h3>新增学习素材</h3><p>保存品牌规则、优秀标题、正文、评论和禁用词。</p></div></div><div class="two"><div><label>类型</label><select id="lType"><option>爆款标题</option><option>正文案例</option><option>开头钩子</option><option>话题标签</option><option>评论回复</option><option>品牌规则</option><option>禁用词</option></select></div><div><label>备注</label><input id="lNote" placeholder="来源 / 表现 / 场景"></div></div><label>内容</label><textarea id="lContent" style="min-height:125px"></textarea><div class="actions"><button class="btn primary" onclick="addLearn()">保存素材</button><button class="btn danger" onclick="clearLearn()">清空学习库</button></div></div><div class="card"><div class="cardhead"><div><h3>已学习内容</h3><p>最新内容排在前面。</p></div></div><div class="learnlist">${d.length?d.map(x=>`<div class="learn"><div class="learntop"><span class="learntype">${esc(x.type)}</span><button class="btn ghost" style="padding:5px 8px;font-size:10px" onclick="delLearn('${x.id}')">删除</button></div><div class="learnbody">${esc(x.content)}</div>${x.note?`<div class="help">备注：${esc(x.note)}</div>`:''}</div>`).join(''):'<div class="empty">还没有学习素材</div>'}</div></div>`}
+function addLearn(){let c=$('lContent').value.trim();if(!c)return toast('请输入内容');let d=getLearn();d.unshift({id:Date.now().toString(36),type:$('lType').value,content:c,note:$('lNote').value.trim()});setLearn(d);renderLearn();toast('已保存')}function delLearn(id){setLearn(getLearn().filter(x=>x.id!==id));renderLearn()}function clearLearn(){if(confirm('确定清空学习库吗？')){localStorage.removeItem(LEARN_KEY);renderLearn()}}function exportLearn(){navigator.clipboard.writeText(JSON.stringify(getLearn(),null,2));toast('学习库 JSON 已复制')}function importLearn(){let r=prompt('粘贴学习库 JSON');if(!r)return;try{let d=JSON.parse(r);if(!Array.isArray(d))throw 0;setLearn(d);renderLearn();toast('导入成功')}catch(e){alert('JSON 格式不正确')}}
+async function callAI(task,extra='',imgs=[]){let res=await fetch('/.netlify/functions/ai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({task,depth:$('depth').value,context:ctx(),extra,learning:getLearn().slice(0,35),images:imgs})});let d=await res.json().catch(()=>({}));if(!res.ok)throw new Error(d.error||`请求失败 ${res.status}`);return d.text||'AI 没有返回内容'}
+async function testAI(){$('connection').textContent='正在测试 Gemini…';try{await callAI('ping','只回复连接成功',[]);$('connection').textContent='✅ Gemini 连接正常';toast('AI 连接成功')}catch(e){$('connection').textContent='❌ '+e.message}}
+loadDefaults();renderCreate();
+</script>
+</body></html>
