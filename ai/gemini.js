@@ -24,6 +24,6 @@ export async function generateWithGemini(payload, { signal } = {}) {
     signal?.removeEventListener('abort', forwardAbort);
   }
   const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(data.error || `Gemini 请求失败（${response.status}）`);
-  return data.text || '';
+  if (!response.ok) throw new Error(data.error || `AI 请求失败（${response.status}）`);
+  return { text: data.text || '', provider: data.provider || 'online', model: data.model || '' };
 }

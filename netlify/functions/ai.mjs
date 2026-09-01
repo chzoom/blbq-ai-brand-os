@@ -51,8 +51,10 @@ function buildPrompt(payload) {
 全局信息：
 门店：${context.store || ""}
 菜品：${context.dishes || ""}
+运营账号：${context.accountName || context.account || "自动选择，请根据门店判断"}
 目标人群：${context.people || ""}
 场景：${context.scene || ""}
+内容平台：${context.platform || "xiaohongshu"}
 内容风格：${context.style || ""}
 正文类型：${context.postType || ""}
 核心卖点：${context.sellingPoints || ""}
@@ -66,7 +68,7 @@ ${learningText}
 输出要求：
 ${requirements[task] || requirements.post}
 
-请用中文输出，结构清晰，可直接复制使用。`;
+请用中文输出，结构清晰，可直接复制使用。若内容平台不是小红书，请适配对应平台的表达长度、互动方式和结构；不要虚构实时热点、价格、热量、库存或配送信息。`;
 }
 
 async function callGemini(payload) {
@@ -177,7 +179,10 @@ export default async (request) => {
     const text = provider === "openai" || provider === "beeapi"
       ? await callOpenAICompatible(payload)
       : await callGemini(payload);
-    return json({ text });
+    const model = provider === "openai" || provider === "beeapi"
+      ? (process.env.OPENAI_MODEL || process.env.BEEAPI_MODEL || "openai-compatible")
+      : (process.env.GEMINI_MODEL || "gemini");
+    return json({ text, provider, model });
   } catch (error) {
     return json({ error: error?.message || "AI 请求失败" }, 500);
   }

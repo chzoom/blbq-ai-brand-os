@@ -47,6 +47,7 @@ const pageMap = {
   marketing: () => showPlatform('marketing'),
   data: () => showPlatform('data'),
   brand: () => showPlatform('brand'),
+  store: () => showPlatform('store'),
   secretary: () => showPlatform('secretary'),
   system: () => showPlatform('system')
 };
@@ -74,10 +75,7 @@ function updateHomeContext() {
   const store = $v15('store')?.value || '未设置门店';
   const style = $v15('style')?.value || '默认风格';
   const scene = $v15('scene')?.value || '未设置场景';
-  const account = $v15('accountSelect')?.value || '品牌主号';
-  context.textContent = `${account} · ${store} · ${style} · ${scene}`;
-  const accountContext = $v15('homeAccountContext');
-  if (accountContext) accountContext.textContent = account;
+  context.textContent = `${store} · ${style} · ${scene}`;
 }
 
 function copyV15Block(button) {
@@ -115,7 +113,9 @@ function watchV15Connection() {
     const missingKey = /GEMINI_API_KEY|密钥未设置|尚未测试/.test(text);
     status.classList.toggle('online', online);
     status.classList.toggle('missing', missingKey && !online);
-    status.innerHTML = `<span class="status-dot"></span>${online ? 'Gemini Online' : missingKey ? 'Gemini 未配置 Key' : 'Gemini 连接失败'}`;
+    const provider = status.dataset.provider || 'AI';
+    const model = status.dataset.model ? ` · ${status.dataset.model}` : '';
+    status.innerHTML = `<span class="status-dot"></span>${online ? `${provider} Online${model}` : missingKey ? 'AI 未配置' : `${provider} 连接失败`}`;
   };
   new MutationObserver(update).observe(connection, { childList: true, subtree: true, characterData: true });
   update();
@@ -134,8 +134,12 @@ document.addEventListener('input', updateHomeContext);
 window.addEventListener('blbq:ai-status', ({ detail }) => {
   const connection = $v15('connection');
   if (!connection) return;
-  if (detail?.source === 'gemini') connection.textContent = '✅ Gemini 连接正常';
-  else if (detail?.source === 'error') connection.textContent = detail.error?.message || '❌ Gemini 连接失败';
+  if (detail?.source === 'online') {
+    connection.textContent = `✅ ${detail.provider || 'AI'} 连接正常${detail.model ? ` · ${detail.model}` : ''}`;
+    const status = $v15('geminiStatus');
+    if (status) { status.dataset.provider = detail.provider || 'AI'; status.dataset.model = detail.model || ''; }
+  }
+  else if (detail?.source === 'error') connection.textContent = detail.error?.message || '❌ AI 连接失败';
 });
 window.renderV15ResultRail = renderV15ResultRail;
 window.copyV15Block = copyV15Block;
@@ -148,7 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
   showV15Page('home');
   watchV15Connection();
   updateHomeContext();
-  window.renderHomeDashboard?.();
   Promise.all([
     import('../ai/adapter.js'),
     import('../ai/workflow.js'),

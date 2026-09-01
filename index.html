@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#bfd82b">
-  <title>饱里宝气｜BLBQ AI Brand OS V2.0</title>
+  <title>饱里宝气｜AI 新媒体运营平台 V15.0</title>
   <link rel="icon" type="image/png" href="assets/logo.png">
   <link rel="apple-touch-icon" href="assets/logo.png">
   
@@ -279,12 +279,12 @@
     <div class="brand">
       <img src="assets/logo.png" alt="饱里宝气">
       <div>
-        <h1>饱里宝气 · BLBQ AI Brand OS</h1>
-        <p>一个后台，管理所有账号、所有门店、所有内容、所有营销。当前账号：<span id="homeAccountContext">品牌主号</span></p>
+        <h1>饱里宝气 · AI 品牌运营中心</h1>
+        <p>创作、诊断、拆解与内容资产，一个工作区完成。</p>
       </div>
     </div>
     <div class="header-meta">
-      <span id="geminiStatus" class="status-pill"><span class="status-dot"></span>Gemini 检查中</span>
+      <span id="geminiStatus" class="status-pill"><span class="status-dot"></span>AI 状态检查中</span>
       <span class="status-pill online"><span class="status-dot"></span>本地引擎 Ready</span>
       <span class="version-pill">V2.0</span>
       <button class="settings-button" type="button" data-page="settings">设置</button>
@@ -295,17 +295,23 @@
       <h2>工作台</h2>
       <nav class="nav-list" aria-label="主导航">
         <button class="nav-item active" type="button" data-page="home" onclick="routePlatformFallback('home')"><span class="nav-icon">⌂</span><span>工作台</span></button>
-        <button class="nav-item" type="button" data-page="create" onclick="routePlatformFallback('create')"><span class="nav-icon">✎</span><span>AI 创作</span></button>
+        <button class="nav-item" type="button" data-page="create" onclick="routePlatformFallback('create')"><span class="nav-icon">✎</span><span>内容运营</span></button>
         <button class="nav-item" type="button" data-page="marketing" onclick="routePlatformFallback('marketing')"><span class="nav-icon">⚑</span><span>营销中心</span></button>
-        <button class="nav-item" type="button" data-page="assets" onclick="routePlatformFallback('assets')"><span class="nav-icon">▤</span><span>内容库</span></button>
         <button class="nav-item" type="button" data-page="data" onclick="routePlatformFallback('data')"><span class="nav-icon">◒</span><span>数据中心</span></button>
-        <button class="nav-item" type="button" data-page="brand" onclick="routePlatformFallback('brand')"><span class="nav-icon">◇</span><span>品牌知识库</span></button>
+        <button class="nav-item" type="button" data-page="brand" onclick="routePlatformFallback('brand')"><span class="nav-icon">◇</span><span>品牌中心</span></button>
+        <button class="nav-item" type="button" data-page="store" onclick="routePlatformFallback('store')"><span class="nav-icon">⌂</span><span>门店中心</span></button>
+        <button class="nav-item" type="button" data-page="secretary" onclick="routePlatformFallback('secretary')"><span class="nav-icon">✦</span><span>AI 运营秘书</span></button>
+        <button class="nav-item" type="button" data-page="assets" onclick="routePlatformFallback('assets')"><span class="nav-icon">▤</span><span>内容资产</span></button>
         <button class="nav-item" type="button" data-page="learn" onclick="routePlatformFallback('learn')"><span class="nav-icon">♧</span><span>学习中心</span></button>
-        <button class="nav-item" type="button" data-page="system" onclick="routePlatformFallback('system')"><span class="nav-icon">⚙</span><span>系统设置</span></button>
+        <button class="nav-item" type="button" data-page="system" onclick="routePlatformFallback('system')"><span class="nav-icon">⚙</span><span>系统中心</span></button>
       </nav>
       <div class="side-section">
         <div class="side-section-title">内容上下文</div>
         <div class="context-form">
+
+      <label>运营账号</label>
+      <select id="accountProfile"><option value="">自动选择账号</option></select>
+      <div id="accountSummary" class="help">根据门店自动选择账号风格</div>
 
       <label>门店</label>
       <input id="store" value="林科大店">
@@ -314,10 +320,6 @@
         <button onclick="setField('store','林科大店')">林科大店</button>
         <button onclick="setField('store','河西大学城店')">河西大学城店</button>
       </div>
-
-      <label>发布账号</label>
-      <select id="accountSelect"><option>饱里宝气品牌主号</option><option>饱里宝气轻食（林科大店）</option><option>饱里宝气轻食健康餐</option><option>饱里宝气轻食（梅溪湖店）</option><option>饱里宝气轻食校园号</option></select>
-      <div class="help">AI 会根据账号定位切换品牌、门店、校园或健康饮食表达。</div>
 
       <label>菜品</label>
       <textarea id="dishes">番茄牛肉片、虾仁玉米滑蛋、清炒包菜丝</textarea>
@@ -372,6 +374,10 @@
               </select>
             </div>
             <div>
+              <label>内容平台</label>
+              <select id="contentPlatform"><option value="xiaohongshu" selected>小红书</option><option value="douyin">抖音</option><option value="community">社群</option><option value="moments">朋友圈</option></select>
+            </div>
+            <div>
               <label>正文类型</label>
               <select id="postType">
                 <option selected>一周菜单</option><option>单品种草</option><option>门店安利</option><option>场景日常</option>
@@ -393,12 +399,25 @@
     </aside>
     <main class="work">
       <section id="homeView" class="home-view">
-        <div class="card os-welcome"><div class="cardhead"><div><h3>今天，先完成一件增长动作</h3><p>选择模块后，AI 会读取门店、菜品、人群、账号和品牌知识库。</p></div><span class="badge">V2.0</span></div><div class="os-quick"><button class="btn primary" type="button" data-workflow>一键爆文</button><button class="btn soft" type="button" data-page="create">开始 AI 创作</button><button class="btn ghost" type="button" data-page="secretary">问 AI 运营秘书</button></div><div class="mini"><h4>当前上下文</h4><div class="help" id="homeContext">林科大店 · 学生视角 · 下课后宿舍午餐</div></div></div>
-        <div class="card"><div class="cardhead"><div><h3>BLBQ AI Brand OS</h3><p>一个后台，管理所有账号、所有门店、所有内容、所有营销。</p></div><span class="badge">品牌运营中心</span></div><div id="osModuleGrid"></div></div>
-        <div id="homeDashboard"></div>
+        <div class="card">
+          <div class="cardhead"><div><h3>今天创作什么？</h3><p>确认左侧门店、菜品、人群和场景，选择一个工作流开始。</p></div><span class="badge">本地引擎随时可用</span></div>
+          <div class="grid">
+            <div><h4 style="margin:0 0 8px;font-size:13px">快速开始</h4><div class="actions"><button class="btn primary" type="button" data-workflow>一键生成笔记</button><button class="btn soft" type="button" data-page="create">开始 AI 创作</button><button class="btn ghost" type="button" data-page="diagnose">诊断一篇笔记</button><button class="btn ghost" type="button" data-page="breakdown">拆解爆款内容</button></div></div>
+            <div class="mini"><h4>当前上下文</h4><div class="help" id="homeContext">林科大店 · 学生视角 · 下课后宿舍午餐</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="cardhead"><div><h3>今日运营建议</h3><p>围绕当前门店和场景安排一条完整运营路径。</p></div><span class="badge">运营秘书</span></div>
+          <div class="platform-grid">
+            <article class="platform-card"><b>上午 · 朋友圈</b><p>发布今日菜单、真实备餐或门店日常。</p><button class="btn soft" type="button" data-page="marketing">进入营销中心</button></article>
+            <article class="platform-card"><b>中午 · 小红书</b><p>围绕饭点痛点发布一条可收藏内容。</p><button class="btn soft" type="button" data-page="create">开始内容运营</button></article>
+            <article class="platform-card"><b>下午 · 社群互动</b><p>用选菜问题收集下一周菜单反馈。</p><button class="btn soft" type="button" data-page="secretary">问 AI 运营秘书</button></article>
+            <article class="platform-card"><b>晚上 · 复盘</b><p>保存内容资产，更新状态和计划日期。</p><button class="btn soft" type="button" data-page="assets">查看内容资产</button></article>
+          </div>
+        </div>
       </section>
       <nav class="tabs" id="workspaceTabs"><button class="tab active" data-main="create" onclick="switchMain('create')">内容创作</button><button class="tab" data-main="analyze" onclick="switchMain('analyze')">笔记分析</button><button class="tab" data-main="learn" onclick="switchMain('learn')">学习中心</button></nav>
-      <section id="main-create" class="pane active"><div class="subtabs"><button class="subtab active" data-create="titles" onclick="switchCreate('titles')">标题</button><button class="subtab" data-create="post" onclick="switchCreate('post')">正文</button><button class="subtab" data-create="tags" onclick="switchCreate('tags')">标签</button><button class="subtab" data-create="replies" onclick="switchCreate('replies')">评论回复</button><button class="subtab" data-create="storeDiff" onclick="switchCreate('storeDiff')">门店差异化</button></div><div id="createBox"></div></section>
+      <section id="main-create" class="pane active"><div class="subtabs content-platform-tabs"><button class="subtab active" data-content-platform="xiaohongshu" onclick="selectContentPlatform('xiaohongshu')">小红书</button><button class="subtab" data-content-platform="douyin" onclick="selectContentPlatform('douyin')">抖音</button><button class="subtab" data-content-platform="community" onclick="selectContentPlatform('community')">社群</button><button class="subtab" data-content-platform="moments" onclick="selectContentPlatform('moments')">朋友圈</button></div><div class="subtabs"><button class="subtab active" data-create="titles" onclick="switchCreate('titles')">标题</button><button class="subtab" data-create="post" onclick="switchCreate('post')">正文</button><button class="subtab" data-create="tags" onclick="switchCreate('tags')">标签</button><button class="subtab" data-create="replies" onclick="switchCreate('replies')">评论回复</button><button class="subtab" data-create="storeDiff" onclick="switchCreate('storeDiff')">门店差异化</button></div><div id="createBox"></div></section>
       <section id="main-analyze" class="pane"><div class="subtabs"><button class="subtab active" data-analyze="diagnose" onclick="switchAnalyze('diagnose')">笔记诊断</button><button class="subtab" data-analyze="breakdown" onclick="switchAnalyze('breakdown')">爆款拆解</button></div><div id="analyzeBox"></div></section>
       <section id="main-learn" class="pane"><div id="learnBox"></div></section>
       <section id="contentAssetsView" class="pane"><div id="assetsBox"></div></section>
@@ -414,15 +433,15 @@
 <script>
 const LEARN_KEY='BLBQ_V14_LEARNING',DEFAULT_KEY='BLBQ_V14_DEFAULTS',ASSET_KEY='BLBQ_V15_ASSETS';let createTask='titles',analyzeTask='diagnose',lastResult='',lastType='',images=[];let localVariant={titles:0,post:0,tags:0,replies:0,storeDiff:0,diagnose:0,breakdown:0};
 const META={titles:['AI 标题生成器','按目标人群生成标题20个、爆款标题5个、低风险标题5个和评论引导。','补充要求（可选）','例：突出一周菜单，不要夸张，不要重复。'],post:['AI 正文生成器','按目标人群生成有钩子、有宽度、有真实场景和种草逻辑的完整笔记。','补充要求（可选）','例：像真实学生分享，先写饭点痛点，再写菜单价值。'],tags:['AI 标签生成器','生成品牌、区域、人群、菜品和场景标签。','补充要求（可选）','例：优先林科大、铁道学院，或中南大学、湖师大、湖大区域词。'],replies:['AI 评论回复生成器','粘贴真实评论，生成有针对性的自然回复。','用户评论 / 补充要求','例：多少钱一份？林科大可以送到宿舍吗？'],storeDiff:['AI 门店差异化工具','同一组菜品分别生成三家门店不同内容。','补充要求（可选）','例：三店标题、正文和图片场景都不要重复。']};
-const $=id=>document.getElementById(id);function setField(id,v){$(id).value=v}function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}function toast(t){let e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>e.style.display='none',2200)}
-function ctx(){return{store:$('store').value.trim(),dishes:$('dishes').value.trim(),people:$('people').value.trim(),scene:$('scene').value.trim(),style:$('style').value,depth:$('depth').value,mode:$('mode').value,postType:$('postType').value,account:$('accountSelect')?.value||'饱里宝气品牌主号',sellingPoints:$('sellingPoints').value.trim()}}
+const $=id=>document.getElementById(id);function setField(id,v){$(id).value=v;$(id).dispatchEvent(new Event('input',{bubbles:true}))}function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}function toast(t){let e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>e.style.display='none',2200)}
+function ctx(){return{store:$('store').value.trim(),account:$('accountProfile')?.value||'',accountName:$('accountProfile')?.selectedOptions?.[0]?.textContent||'',dishes:$('dishes').value.trim(),people:$('people').value.trim(),scene:$('scene').value.trim(),style:$('style').value,depth:$('depth').value,mode:$('mode').value,platform:$('contentPlatform')?.value||'xiaohongshu',postType:$('postType').value,sellingPoints:$('sellingPoints').value.trim()}}
 function saveDefaults(){localStorage.setItem(DEFAULT_KEY,JSON.stringify(ctx()));toast('设置已保存')}function loadDefaults(){try{let d=JSON.parse(localStorage.getItem(DEFAULT_KEY)||'null');if(d)Object.entries(d).forEach(([k,v])=>$(k)&&($(k).value=v))}catch(e){}}
 function switchMain(n){document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.main===n));document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));$('main-'+n).classList.add('active');if(n==='learn')renderLearn()}
 function switchCreate(t){createTask=t;document.querySelectorAll('[data-create]').forEach(b=>b.classList.toggle('active',b.dataset.create===t));renderCreate();loadDraftState()}function switchAnalyze(t){analyzeTask=t;document.querySelectorAll('[data-analyze]').forEach(b=>b.classList.toggle('active',b.dataset.analyze===t));renderAnalyze()}
 function resultCard(id){return `<div class="card"><div class="cardhead"><div><h3>生成结果</h3><p>可复制、保存或在发布前检查。</p></div><div class="actions"><button class="btn soft" onclick="copyResult('${id}')">复制</button><button class="btn ghost" onclick="saveResult()">保存学习</button><button class="btn soft" onclick="saveAsset('${id}')">保存资产</button><button class="btn soft" onclick="runPublishCheck('${id}')">发布前检查</button></div></div><div id="${id}" class="result"><span class="placeholder">等待生成内容…</span></div></div>`}
 function renderCreate(){let m=META[createTask];$('createBox').innerHTML=`<div class="card"><div class="cardhead"><div><h3>${m[0]}</h3><p>${m[1]}</p></div><span class="badge">${$('mode').selectedOptions[0].text}</span></div><div class="grid"><div><label>${m[2]}</label><textarea id="extra" placeholder="${m[3]}"></textarea><div class="actions"><button class="btn primary" onclick="runCreate()">AI 生成</button><button class="btn ghost" onclick="runLocal()">本地兜底</button><button class="btn soft" onclick="rerollLocal()">换一换</button></div><div class="help">本地兜底会识别学生、考研党、上班族等不同人群；“换一换”不会改变左侧信息，会切换不同钩子、场景和种草角度。</div></div><div class="mini"><h4>本模块输出</h4><div class="help">${guide(createTask)}</div></div></div></div>${resultCard('createResult')}`}
 function guide(t){return{titles:'20个普通标题、5个爆款标题、5个低风险标题、5条评论引导。',post:'标题参考、完整正文、标签、门店结尾、图片建议。',tags:'标签分类和可直接复制的组合。',replies:'正向、问价、问门店、负面反馈和互动回复。',storeDiff:'三店的人群、场景、标题、正文角度、图片和标签。'}[t]}
-function setResult(id,t,load=false){let e=$(id);e.textContent=t;e.classList.toggle('loading',load);if(!load&&window.renderV15ResultRail)window.renderV15ResultRail(t,{task:createTask});if(!load)saveDraftState()}function copyResult(id){navigator.clipboard.writeText($(id)?.textContent||'');toast('已复制')}
+function setResult(id,t,load=false){let e=$(id);e.textContent=t;e.classList.toggle('loading',load);if(!load&&window.renderV15ResultRail)window.renderV15ResultRail(t,{task:createTask});if(!load)saveDraftState()}async function copyResult(id){try{if(!navigator.clipboard?.writeText)throw new Error('不支持剪贴板');await navigator.clipboard.writeText($(id)?.textContent||'');toast('已复制')}catch(e){toast('复制失败，请手动选择文本')}}
 function publishAudit(text){
   const checks=[
     {label:'价格 / 套餐',pattern:/\d+(?:\.\d+)?\s*元|价格|套餐/,tip:'请确认价格、套餐和分量与当前门店一致。'},
@@ -1293,16 +1312,17 @@ ${bodyScore>=25?'正文信息较完整，建议继续保持短句换行。':'正
 }
 function getAssets(){try{return JSON.parse(localStorage.getItem(ASSET_KEY)||'[]')}catch(e){return[]}}
 function setAssets(d){localStorage.setItem(ASSET_KEY,JSON.stringify(d))}
-function saveAsset(id){const content=$(id)?.textContent?.trim();if(!content||content.includes('等待生成'))return toast('请先生成内容');const d=getAssets();d.unshift({id:Date.now().toString(36),title:`${createTask} · ${ctx().store}`,type:createTask,store:ctx().store,status:'草稿',planDate:'',content,createdAt:new Date().toISOString()});setAssets(d);toast('已保存到内容资产')}
+function saveAsset(id){const content=$(id)?.textContent?.trim();if(!content||content.includes('等待生成'))return toast('请先生成内容');const d=getAssets();d.unshift({id:Date.now().toString(36),title:`${createTask} · ${ctx().store}`,type:createTask,store:ctx().store,status:'草稿',planDate:'',metrics:{exposure:0,likes:0,favorites:0,comments:0,messages:0,orders:0},content,createdAt:new Date().toISOString()});setAssets(d);toast('已保存到内容资产')}
 function updateAsset(id,key,value){const d=getAssets();const item=d.find(x=>x.id===id);if(!item)return;item[key]=value;setAssets(d)}
 function deleteAsset(id){setAssets(getAssets().filter(x=>x.id!==id));renderAssets();toast('资产已删除')}
 function renderAssets(){const box=$('assetsBox');if(!box)return;const all=getAssets();box.innerHTML=`<div class="card"><div class="cardhead"><div><h3>内容资产中心</h3><p>把生成结果变成可搜索、可排期、可复盘的内容资产。</p></div><span class="badge">${all.length} 条资产</span></div><div class="asset-toolbar"><input id="assetSearch" placeholder="搜索标题、内容或门店" oninput="renderAssetList()"><select id="assetStore" onchange="renderAssetList()"><option value="">全部门店</option><option>林科大店</option><option>梅溪湖店</option><option>河西大学城店</option></select><select id="assetStatus" onchange="renderAssetList()"><option value="">全部状态</option><option>草稿</option><option>待审核</option><option>待发布</option><option>已发布</option><option>已复盘</option></select><button class="btn soft" onclick="exportAssets()">导出</button></div><div id="assetList" class="asset-list"></div></div>`;renderAssetList()}
-function renderAssetList(){const list=$('assetList');if(!list)return;const q=($('assetSearch')?.value||'').trim().toLowerCase(),store=$('assetStore')?.value||'',status=$('assetStatus')?.value||'';const data=getAssets().filter(x=>(!q||`${x.title} ${x.content} ${x.store}`.toLowerCase().includes(q))&&(!store||x.store===store)&&(!status||x.status===status));list.innerHTML=data.length?data.map(x=>`<article class="asset-item"><div class="asset-item-head"><strong class="asset-item-title">${esc(x.title)}</strong><button class="btn danger" onclick="deleteAsset('${x.id}')">删除</button></div><div class="asset-item-meta"><span class="asset-chip">${esc(x.store)}</span><span class="asset-chip">${esc(x.type)}</span><select onchange="updateAsset('${x.id}','status',this.value)">${['草稿','待审核','待发布','已发布','已复盘'].map(s=>`<option ${x.status===s?'selected':''}>${s}</option>`).join('')}</select><input type="date" value="${esc(x.planDate)}" onchange="updateAsset('${x.id}','planDate',this.value)"></div><div class="asset-content">${esc(x.content)}</div></article>`).join(''):'<div class="empty">暂无匹配资产。生成结果后点击“保存资产”即可建立内容库。</div>'}
-function exportAssets(){navigator.clipboard?.writeText(JSON.stringify(getAssets(),null,2));toast('资产 JSON 已复制')}
+function renderAssetList(){const list=$('assetList');if(!list)return;const q=($('assetSearch')?.value||'').trim().toLowerCase(),store=$('assetStore')?.value||'',status=$('assetStatus')?.value||'';const data=getAssets().filter(x=>(!q||`${x.title} ${x.content} ${x.store}`.toLowerCase().includes(q))&&(!store||x.store===store)&&(!status||x.status===status));list.innerHTML=data.length?data.map(x=>{const m=x.metrics||{};return `<article class="asset-item"><div class="asset-item-head"><strong class="asset-item-title">${esc(x.title)}</strong><button class="btn danger" onclick="deleteAsset('${x.id}')">删除</button></div><div class="asset-item-meta"><span class="asset-chip">${esc(x.store)}</span><span class="asset-chip">${esc(x.type)}</span><select onchange="updateAsset('${x.id}','status',this.value)">${['草稿','待审核','待发布','已发布','已复盘'].map(s=>`<option ${x.status===s?'selected':''}>${s}</option>`).join('')}</select><input type="date" value="${esc(x.planDate)}" onchange="updateAsset('${x.id}','planDate',this.value)"></div><details class="asset-review"><summary>填写发布表现</summary><div class="two"><input type="number" min="0" placeholder="曝光" value="${m.exposure||''}" onchange="updateAssetMetric('${x.id}','exposure',this.value)"><input type="number" min="0" placeholder="点赞" value="${m.likes||''}" onchange="updateAssetMetric('${x.id}','likes',this.value)"><input type="number" min="0" placeholder="收藏" value="${m.favorites||''}" onchange="updateAssetMetric('${x.id}','favorites',this.value)"><input type="number" min="0" placeholder="评论" value="${m.comments||''}" onchange="updateAssetMetric('${x.id}','comments',this.value)"><input type="number" min="0" placeholder="私信" value="${m.messages||''}" onchange="updateAssetMetric('${x.id}','messages',this.value)"><input type="number" min="0" placeholder="下单" value="${m.orders||''}" onchange="updateAssetMetric('${x.id}','orders',this.value)"></div></details><div class="asset-content">${esc(x.content)}</div></article>`}).join(''):'<div class="empty">暂无匹配资产。生成结果后点击“保存资产”即可建立内容库。</div>'}
+function updateAssetMetric(id,key,value){const d=getAssets();const item=d.find(x=>x.id===id);if(!item)return;item.metrics={...(item.metrics||{}),[key]:Number(value||0)};setAssets(d)}
+function exportAssets(){const text=JSON.stringify(getAssets(),null,2);try{const blob=new Blob([text],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='baolibaoqi-content-assets.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),500);toast('资产文件已下载')}catch(e){navigator.clipboard?.writeText(text);toast('资产 JSON 已复制')}}
 function getLearn(){try{return JSON.parse(localStorage.getItem(LEARN_KEY)||'[]')}catch(e){return[]}}function setLearn(d){localStorage.setItem(LEARN_KEY,JSON.stringify(d))}function renderLearn(){let d=getLearn(),n={};d.forEach(x=>n[x.type]=(n[x.type]||0)+1);$('learnBox').innerHTML=`<div class="card"><div class="cardhead"><div><h3>持续学习中心</h3><p>优秀内容会作为上下文发送给 Gemini。</p></div><div class="actions"><button class="btn soft" onclick="exportLearn()">导出</button><button class="btn ghost" onclick="importLearn()">导入</button></div></div><div class="stats"><div class="stat"><strong>${d.length}</strong><span class="help">素材总数</span></div><div class="stat"><strong>${n['爆款标题']||0}</strong><span class="help">标题素材</span></div><div class="stat"><strong>${n['正文案例']||0}</strong><span class="help">正文案例</span></div></div></div><div class="card"><div class="cardhead"><div><h3>新增学习素材</h3><p>保存品牌规则、优秀标题、正文、评论和禁用词。</p></div></div><div class="two"><div><label>类型</label><select id="lType"><option>爆款标题</option><option>正文案例</option><option>开头钩子</option><option>话题标签</option><option>评论回复</option><option>品牌规则</option><option>禁用词</option></select></div><div><label>备注</label><input id="lNote" placeholder="来源 / 表现 / 场景"></div></div><label>内容</label><textarea id="lContent" style="min-height:125px"></textarea><div class="actions"><button class="btn primary" onclick="addLearn()">保存素材</button><button class="btn danger" onclick="clearLearn()">清空学习库</button></div></div><div class="card"><div class="cardhead"><div><h3>已学习内容</h3><p>最新内容排在前面。</p></div></div><div class="learnlist">${d.length?d.map(x=>`<div class="learn"><div class="learntop"><span class="learntype">${esc(x.type)}</span><button class="btn ghost" style="padding:5px 8px;font-size:10px" onclick="delLearn('${x.id}')">删除</button></div><div class="learnbody">${esc(x.content)}</div>${x.note?`<div class="help">备注：${esc(x.note)}</div>`:''}</div>`).join(''):'<div class="empty">还没有学习素材</div>'}</div></div>`}
 function addLearn(){let c=$('lContent').value.trim();if(!c)return toast('请输入内容');let d=getLearn();d.unshift({id:Date.now().toString(36),type:$('lType').value,content:c,note:$('lNote').value.trim()});setLearn(d);renderLearn();toast('已保存')}function delLearn(id){setLearn(getLearn().filter(x=>x.id!==id));renderLearn()}function clearLearn(){if(confirm('确定清空学习库吗？')){localStorage.removeItem(LEARN_KEY);renderLearn()}}function exportLearn(){navigator.clipboard.writeText(JSON.stringify(getLearn(),null,2));toast('学习库 JSON 已复制')}function importLearn(){let r=prompt('粘贴学习库 JSON');if(!r)return;try{let d=JSON.parse(r);if(!Array.isArray(d))throw 0;setLearn(d);renderLearn();toast('导入成功')}catch(e){alert('JSON 格式不正确')}}
 async function callAI(task,extra='',imgs=[]){if(window.BLBQAI?.generate){let result=await window.BLBQAI.generate({task,depth:$('depth').value,context:ctx(),extra,learning:getLearn().slice(0,35),images:imgs});return result.text||'AI 没有返回内容'}let res=await fetch('/.netlify/functions/ai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({task,depth:$('depth').value,context:ctx(),extra,learning:getLearn().slice(0,35),images:imgs})});let d=await res.json().catch(()=>({}));if(!res.ok)throw new Error(d.error||`请求失败 ${res.status}`);return d.text||'AI 没有返回内容'}
-async function testAI(){$('connection').textContent='正在测试在线连接…';try{await callAI('ping','只回复连接成功',[]);$('connection').textContent='✅ 在线连接正常';toast('在线连接成功')}catch(e){$('connection').textContent='❌ '+e.message}}
+async function testAI(){$('connection').textContent='正在测试在线连接…';try{const result=window.BLBQAI?.generate?await window.BLBQAI.generate({task:'ping',depth:$('depth').value,context:ctx(),extra:'只回复连接成功',learning:[],images:[]}):await callAI('ping','只回复连接成功',[]);const provider=result?.provider||result?.source||'在线 AI';const model=result?.model?' · '+result.model:'';$('connection').textContent='✅ '+provider+' 连接正常'+model;const status=$('geminiStatus');if(status){status.dataset.provider=provider;status.dataset.model=result?.model||'';status.classList.add('online');status.classList.remove('missing');status.innerHTML='<span class="status-dot"></span>'+provider+' Online'+model}toast('在线连接成功')}catch(e){$('connection').textContent='❌ '+e.message;const status=$('geminiStatus');if(status){status.classList.remove('online');status.classList.add('missing');status.innerHTML='<span class="status-dot"></span>AI 连接失败'}}}
 loadDefaults();renderCreate();loadDraftState();document.addEventListener('input',()=>{clearTimeout(window.draftTimer);window.draftTimer=setTimeout(saveDraftState,500)});
 // Navigation fallback: the core workspace remains usable even if an optional ES module fails to load.
 function routePlatformFallback(page){
@@ -1315,10 +1335,11 @@ function routePlatformFallback(page){
   if(page==='learn'){$('workspaceTabs')?.classList.remove('v15-hidden');$('main-learn')?.classList.add('active');window.renderLearn?.();return}
   if(page==='assets'){$('workspaceTabs')?.classList.add('v15-hidden');$('contentAssetsView')?.classList.add('active');window.renderAssets?.();return}
   if(page==='settings'){$('workspaceTabs')?.classList.add('v15-hidden');$('settingsView')?.classList.add('active');return}
-  if(['marketing','data','brand','secretary','system'].includes(page)){$('workspaceTabs')?.classList.add('v15-hidden');$('platformView')?.classList.add('active');if(window.renderPlatformPage)window.renderPlatformPage(page);else{$('platformBox').innerHTML=`<div class="card"><div class="cardhead"><div><h3>${page==='marketing'?'营销中心':page==='data'?'数据中心':page==='brand'?'品牌中心':page==='secretary'?'AI 运营秘书':'系统中心'}</h3><p>模块已打开。可继续使用内容运营、学习中心和本地引擎。</p></div><span class="badge">本地可用</span></div><div class="platform-output">平台模块脚本尚未加载完成，但页面路由已恢复。请刷新后继续操作。</div></div>`;}}
+  if(['marketing','data','brand','store','secretary','system'].includes(page)){$('workspaceTabs')?.classList.add('v15-hidden');$('platformView')?.classList.add('active');if(window.renderPlatformPage)window.renderPlatformPage(page);else{$('platformBox').innerHTML=`<div class="card"><div class="cardhead"><div><h3>${page==='marketing'?'营销中心':page==='data'?'数据中心':page==='brand'?'品牌中心':page==='store'?'门店中心':page==='secretary'?'AI 运营秘书':'系统中心'}</h3><p>模块已打开。可继续使用内容运营、学习中心和本地引擎。</p></div><span class="badge">本地可用</span></div><div class="platform-output">平台模块脚本尚未加载完成，但页面路由已恢复。请刷新后继续操作。</div></div>`;}}
 }
 document.addEventListener('click',e=>{const target=e.target.closest('[data-page]');if(target&&!target.getAttribute('onclick'))routePlatformFallback(target.dataset.page)});
 </script>
 <script src="js/platform.js" defer></script>
 <script type="module" src="js/app-shell.js"></script>
+<script src="js/brand-os.js" defer></script>
 </body></html>

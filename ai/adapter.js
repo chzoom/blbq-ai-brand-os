@@ -25,15 +25,32 @@ export async function generate(payload, { signal } = {}) {
   });
 
   try {
-    const text = await generateWithGemini(enriched, { signal });
-    window.dispatchEvent(new CustomEvent('blbq:ai-status', { detail: { source: 'gemini' } }));
-    return { text, source: 'gemini' };
+    const response = await generateWithGemini(enriched, { signal });
+    const text = typeof response === 'string' ? response : response.text;
+    const provider = typeof response === 'string' ? 'online' : (response.provider || 'online');
+    window.dispatchEvent(new CustomEvent('blbq:ai-status', { detail: { source: 'online', provider, model: response.model || '' } }));
+    return { text, source: provider, provider, model: response.model || '' };
   } catch (error) {
-    window.dispatchEvent(new CustomEvent('blbq:ai-status', { detail: { source: 'error', error } }));
+    window.dispatchEvent(new CustomEvent('blbq:ai-status', { detail: { source: 'error', provider: 'online', error } }));
     if (payload.context?.mode !== 'auto') throw error;
     const text = generateWithLocal(payload.task, { reroll: false });
     return { text, source: 'local', error };
   }
 }
 
-window.BLBQAI = { generate };
+export async function analyze(payload, options = {}) {
+  return generate({ ...payload, task: payload.task || 'diagnose' }, options);
+}
+
+export async function vision(payload, options = {}) {
+  return generate({ ...payload, task: payload.task || 'breakdown', images: payload.images || [] }, options);
+}
+
+export async function embed(payload) {
+  const value = String(payload?.text || payload || '');
+  return { vector: [...new TextEncoder().encode(value.slice(0, 512))].slice(0, 64), source: 'local-compatible' };
+}
+
+const AI = { generate, analyze, vision, embed };
+if (typeof window !== 'undefined') window.BLBQAI = AI;
+export default AI;

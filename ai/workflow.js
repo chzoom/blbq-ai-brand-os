@@ -1,12 +1,8 @@
-import { generate } from './adapter.js';
+import { runWorkflow } from '../workflows/engine.js';
+import { xhsWorkflow } from '../workflows/xhsWorkflow.js';
 
 export async function generateNoteWorkflow(context, options = {}) {
-  const base = { context, learning: options.learning || [], images: [] };
-  const titles = await generate({ ...base, task: 'titles', extra: options.extra || '' });
-  const post = await generate({ ...base, task: 'post', extra: `标题结果：\n${titles.text}` });
-  const tags = await generate({ ...base, task: 'tags', extra: `标题：\n${titles.text}\n\n正文：\n${post.text}` });
-  const replies = await generate({ ...base, task: 'replies', extra: `正文：\n${post.text}` });
-  return { titles, post, tags, replies };
+  return runWorkflow('xhs-note', { context, learning: options.learning || [], images: [], extra: options.extra || '' }, options);
 }
 
 function formatWorkflow(result) {

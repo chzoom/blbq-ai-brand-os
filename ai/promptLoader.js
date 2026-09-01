@@ -8,7 +8,7 @@ const promptFiles = {
   rewrite: 'rewrite.md'
 };
 
-const knowledgeFiles = ['brand.md', 'stores.md', 'menu.md', 'position.md', 'target.md', 'xiaohongshu.md'];
+const knowledgeFiles = ['brand.md', 'stores.md', 'menu.md', 'position.md', 'target.md', 'xiaohongshu.md', 'accounts.md', 'delivery.md'];
 const cache = new Map();
 
 async function readText(path) {

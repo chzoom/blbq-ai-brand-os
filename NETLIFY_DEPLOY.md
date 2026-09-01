@@ -1,8 +1,8 @@
-# 1·\`AQw345Netlify 部署版
+# Netlify 部署版
 
 ## 部署
 
-推荐将本目录上传到 GitHub 后连接 Netlify，或使用 Netlify CLI/API 部署，这样会同时部署静态文件和 `netlify/functions` 下的 Functions。仅使用 Netlify Drop/普通静态压缩包拖拽时，应视为静态站部署方式，不能假设 `netlify/functions/ai.mjs` 会一并发布；如果 Function 未部署，在线 AI 请求会失败。
+将本目录上传到 GitHub，或在 Netlify 选择 **Add new site → Deploy manually**，上传生成的部署压缩包。
 
 `netlify.toml` 已配置：
 
